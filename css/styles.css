@@ -38,6 +38,9 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 #maincontent {
   background-color: #f3f3f3;
   min-height: 100%;
+  display: grid;
+  grid-template-rows: repeat(3, auto);
+  position: relative;
 }
 #footer {
   background-color: #444;
@@ -80,9 +83,10 @@ nav h1 a {
     padding: 10px 40px 16px;
     list-style: none;
     background-color: #eee;
-    font-size: 17px;
+    font-size: 35px;
     margin: 0;
-    width: calc(50% - 80px);
+    /*width: 100%;*/
+    text-align: center;
 }
 
 /* Display list items side by side */
@@ -234,19 +238,26 @@ nav h1 a {
 }
 
 /* ====================== Restaurant Details ====================== */
+.inside {
+  padding-top: 100px;
+}
+
 .inside header {
+  height: 100px;
+  width: 100%;
+  display: block;
   position: fixed;
   top: 0;
-  width: 100%;
+  left: 0;
   z-index: 1000;
 }
 .inside #map-container {
   background: blue none repeat scroll 0 0;
-  height: 87%;
-  position: fixed;
+  height: 30%;
+  position: absolute;
   right: 0;
-  top: 80px;
-  width: 50%;
+  top: 100px;
+  width: 100%;
 }
 .inside #map {
   background-color: #ccc;
@@ -255,8 +266,9 @@ nav h1 a {
 }
 .inside #footer {
   bottom: 0;
-  position: absolute;
-  width: 50%;
+  position: relative;
+  width: 90%;
+  display: block;
 }
 #restaurant-name {
   color: #f18200;
@@ -287,6 +299,7 @@ nav h1 a {
   text-transform: uppercase;
 	width: 90%;
 }
+
 #restaurant-container, #reviews-container {
   border-bottom: 1px solid #d9d9d9;
   border-top: 1px solid #fff;
