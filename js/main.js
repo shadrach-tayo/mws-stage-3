@@ -11,7 +11,54 @@ document.addEventListener('DOMContentLoaded', (event) => {
   initMap(); // added 
   fetchNeighborhoods();
   fetchCuisines();
+  registerServiceWorker();
 });
+
+/*
+  Register service worker
+*/
+registerServiceWorker = () => { 
+  if(navigator.serviceWorker) {
+    navigator.serviceWorker.register('/sw.js', {scope: '/'})
+    .then(reg => {
+      let serviceWorker;
+      
+      // check worker status
+      if(reg.installing) 
+        serviceWorker = reg.installing;
+      else if(reg.waiting)
+        serviceWorker = reg.waiting;
+      else if(reg.active)
+        serviceWorker = reg.active;
+
+      if(serviceWorker) {
+        console.log('service woker has been registered');
+      }
+
+      // Add listener to track serviceWorker update event
+      reg.addEventListener('updatefound', () => {
+        trackInstalling(reg.installing);
+      });
+    })
+  }
+}
+
+/**
+ * function to track update in serviceWorker
+ */
+trackInstalling = (worker) => {
+  worker.addEventListener('statechange', () => {
+    if(worker.state = 'installed') {
+      // function to  update to newly installed worker
+      updateWorker(worker);
+    }
+  })
+}
+
+updateWorker = (worker) => {
+  worker.postMessage({action: 'skipWaiting'});
+  console.log('worker updated');
+}
 
 /**
  * Fetch all neighborhoods and set their HTML.
