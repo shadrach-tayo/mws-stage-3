@@ -43,34 +43,40 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 .home-page {
   display: grid;
   grid-template-columns: 100%;
-  grid-gap: 0;
-  align-items: 
+  grid-template-areas: "header"
+                       "main"
+                       "footer";
   width: 100vw;
+  height: 100vh;
   overflow-x: hidden;
 }
 
-#maincontent {
+.home-page > #maincontent {
+  grid-area: main;
+  align-self: start;
   background-color: #f3f3f3;
   max-height: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto;
-}
+  grid-template-areas: "map"
+} 
 
-.home-page #maincontent {
+.home-page > #maincontent {
   justify-items: space-around;
 }
 
-.home-page #map-container {
+#maincontent > #map-container {
   width: 100%;
-  height: 100%;
+  height: 250px;
 }
 
-.home-page header {
+.home-page > header {
   height: 20%;
+  grid-area: header;
 }
 
 #footer {
+  /* height: 200px; */
   background-color: #444;
   color: #aaa;
   font-size: 8pt;
@@ -78,6 +84,12 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
   padding: 25px;
   text-align: center;
   text-transform: uppercase;
+}
+
+.home-page > footer {
+  grid-area: footer;
+  grid-row: -1;
+  align-self: end;
 }
 /* ====================== Navigation ====================== */
 nav {
@@ -203,16 +215,17 @@ nav h1 a {
 
 /* ====================== Restaurant Listing ====================== */
 #restaurants-list {
-  width: 100%;
+  /* width: 100%; */
   background-color: #f3f3f3;
   list-style: outside none none;
   margin: 0 0 20px 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 20px;
+  grid-gap: 10px;
   align-self: center;
   justify-content: center;
   text-align: center;
+  -webkit-padding-start: 10px;
 }
 #restaurants-list li {
   background-color: #fff;
@@ -264,7 +277,7 @@ nav h1 a {
 
 @media screen and (max-width: 968px) {
   #restaurants-list {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, autofit);
       grid-gap: 10px;
   }
 }

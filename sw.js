@@ -1,4 +1,4 @@
-const staticCacheName = 'mws-restaurant-project-3';
+const staticCacheName = 'mws-restaurant-project-1';
 
 self.addEventListener('install', event => {
 	event.waitUntil(
