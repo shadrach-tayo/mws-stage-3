@@ -32,7 +32,8 @@ registerServiceWorker = () => {
         serviceWorker = reg.active;
 
       if(serviceWorker) {
-        console.log('service woker has been registered');
+        console.log('service worker has been registered');
+        console.log(serviceWorker);
       }
 
       // Add listener to track serviceWorker update event
@@ -46,6 +47,7 @@ registerServiceWorker = () => {
 /**
  * function to track update in serviceWorker
  */
+let refreshing = false;
 trackInstalling = (worker) => {
   worker.addEventListener('statechange', () => {
     if(worker.state = 'installed') {
@@ -57,7 +59,14 @@ trackInstalling = (worker) => {
 
 updateWorker = (worker) => {
   worker.postMessage({action: 'skipWaiting'});
+  if(!refreshing)
+    reloadPage();
+    refreshing = true;
   console.log('worker updated');
+}
+
+reloadPage = () => {
+  window.location.reload();
 }
 
 /**
