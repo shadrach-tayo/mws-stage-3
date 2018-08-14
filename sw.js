@@ -1,4 +1,5 @@
 const staticCacheName = 'mws-restaurant-project-1';
+const cloudFilesCache = 'mws-restaurant-cloudFiles-1';
 
 self.addEventListener('install', event => {
 	event.waitUntil(
@@ -21,12 +22,12 @@ self.addEventListener('install', event => {
 						'./img/5.jpg',
 						'./img/6.jpg',
 						'./img/7.jpg',
-						'./img/8.jpg',
+						'./img/	8.jpg',
 						'./img/9.jpg',
 						'./img/10.jpg',
 						'./data/restaurants.json'
 					])
-		}).catch(err => console.log(err))
+		}).catch(err => console.log(err, 'static assets failed to be cached'))
 	);
 });
 
@@ -45,7 +46,7 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
 	let requestUrl = new URL(event.request.url);
 
-	if(requestUrl.orgin === location.origin) {
+	if(requestUrl.origin === location.origin) {
 		console.log('request to the same origin');
 		if(requestUrl.pathname === '/') {
 			event.respondWith(caches.match('./index.html'));
@@ -57,6 +58,12 @@ self.addEventListener('fetch', event => {
 		}
 	}
 
+	if(requestUrl.href.includes('googlecode.com/svn/trunk/normalize.css')) {
+		console.log('fetching cloudfile');
+		event.respondWith(serveStaticCloudFile(event.request));
+		return;
+	}
+	
 	event.respondWith(
 		caches.match(event.request).then(response => {
 			return response || fetch(event.request);
@@ -65,7 +72,6 @@ self.addEventListener('fetch', event => {
 });
 
 serveImages = async (request) => {
-	console.log(request);
 	let networkFetch = await fetch(request);
 	return caches.open(staticCacheName).then(cache => {
 		return cache.match(request).then(response => {
@@ -73,14 +79,27 @@ serveImages = async (request) => {
 				if(networkResponse)
 					cache.put(request, networkResponse.clone());
 					return networkResponse;	
-			})
-		})
-	})
+			});
+		});
+	});
+}
+
+serveStaticCloudFile = (request) => {
+	let networkFetch = fetch(request);
+	return caches.open(serveStaticCloudFile).then(cache => {
+		return cache.match(request).then(response => {
+			return response || networkFetch.then(networkResponse => {
+				if(networkResponse)
+					cache.put(request, networkResponse.clone());
+					return networkResponse;
+			});
+		});
+	});
 }
 
 self.addEventListener('message', event => {
 	if(event.data.action == 'skipWaiting') {
-		console.log('skipping install stage');	
+		console.log('skipping installation stage');	
 			self.skipWaiting();
 	}
 });
