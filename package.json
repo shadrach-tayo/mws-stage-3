@@ -12,8 +12,7 @@
   },
   "devDependencies": {
     "gulp": "^4.0.0",
-    "gulp-autoprefixer": "^5.0.0",
-    "gulp-responsive": "2.11.0"
+    "gulp-autoprefixer": "^5.0.0"
   },
   "author": "shadrach",
   "license": "ISC",
