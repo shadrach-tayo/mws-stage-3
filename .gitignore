@@ -5,6 +5,4 @@
 /data
 /img
 /js
-*.html
-*.js
-*.json
+!/build/
