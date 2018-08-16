@@ -5,7 +5,7 @@
 /data
 /img
 /js
-/index.html
-/restaurant.html
-/sw.js
-/package-lock.json
+index.html
+restaurant.html
+sw.js
+package-lock.json
