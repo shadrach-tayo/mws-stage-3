@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 */
 registerServiceWorker = () => { 
   if(navigator.serviceWorker) {
-    navigator.serviceWorker.register('/sw.js', {scope: 'build/'})
+    navigator.serviceWorker.register('sw.js', {scope: '/'})
     .then(reg => {
       let serviceWorker;
       
@@ -217,8 +217,8 @@ createRestaurantHTML = (restaurant) => {
   const image = document.createElement('img');
   image.className = 'restaurant-img';
   image.src = `img/${images.small}`;
-  image.sizes = `(min-width: 600px) 25vw, (min-width: 500px) 50vw', 100vw`;
-  images.srcset = `img/${images.small} 100vw, img/${images} 200vw`;
+  image.sizes = `(max-width: 200px) 25vw, (min-width: 200px) 50vw', 100vw`;
+  images.srcset = `img/${images.small} 50w, img/${images} 100w`;
   image.alt = restaurant.name;
   li.append(image);
 

@@ -185,7 +185,7 @@ nav h1 a {
   margin-bottom: 20px;
 }
 
-[role=label] {
+label p {
   font-size: 1.2rem;
   color: #222222;
 }
@@ -221,6 +221,11 @@ nav h1 a {
   width: 200px;
 }
 
+.filter-options select:hover,
+.filter-options select:focus {
+  background-color: #E8E8E8;
+}
+
 @media screen and (max-width: 460px) {
   .filter-select {
       grid-template-columns: 200px;
@@ -250,6 +255,7 @@ nav h1 a {
   text-align: center;
   -webkit-padding-start: 10px;
 }
+
 #restaurants-list li {
   background-color: #eeeeee;
   font-family: Arial,sans-serif;
@@ -271,7 +277,7 @@ nav h1 a {
 }
 
 #restaurants-list li h1 {
-  color: #f18200;
+  color: #A80000;
   font-family: Arial,sans-serif;
   font-size: 14pt;
   font-weight: 200;

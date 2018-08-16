@@ -17,7 +17,7 @@
     </nav>
   </header>
 
-  <main id="maincontent">
+  <main id="maincontent" role="main">
     <section id="map-container">
       <div id="map"></div>
     </section>
@@ -25,14 +25,14 @@
       <div class="filter-options">
         <h2>Filter Results</h2>
         <div class="filter-select">
-          <label for="neighborhoods-select">
-            <p id="neighborhoods-select__label" role=label>Select neighborhood</p>
+          <label for="neighborhoods-select" aria-owns="neighborhoods-select__label">
+            <p id="neighborhoods-select__label">Select neighborhood</p>
             <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()" aria-labelledby="neighborhoods-select__label">
               <option value="all">All Neighborhoods</option>
             </select>
           </label>
-          <label for="cuisines-select">
-            <p id="cuisines-select__label" role=label>Select cuisine</p>
+          <label for="cuisines-select" aria-owns="cuisines-select__label">
+            <p id="cuisines-select__label">Select cuisine</p>
             <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()" aria-labelledby="cuisines-select__label">
               <option value="all">All Cuisines</option>
             </select>
