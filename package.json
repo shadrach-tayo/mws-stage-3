@@ -4,6 +4,7 @@
   "description": "a mobile web restaurants review app",
   "main": "/js/main.js",
   "scripts": {
+    "start": "live-server --open=build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

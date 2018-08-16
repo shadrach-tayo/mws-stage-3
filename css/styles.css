@@ -143,7 +143,7 @@ nav h1 a {
 /* Display list items side by side */
 #breadcrumb li {
     display: inline;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
 }
 
 /* Add a slash symbol (/) before/behind each list item */
@@ -156,6 +156,7 @@ nav h1 a {
 /* Add a color to all links inside the list */
 #breadcrumb li a {
     color: #0275d8;
+    font-size: 1.5rem;
     text-decoration: none;
 }
 
@@ -213,6 +214,12 @@ nav h1 a {
       grid-gap: 10px;
   }
 }
+
+@media screen and (max-width: 440px) {
+  #breadcrumb li, #breadcrumb li a {
+    font-size: 1rem;
+  }
+} 
 
 /* ====================== Restaurant Listing ====================== */
 #restaurants-list {

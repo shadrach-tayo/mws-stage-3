@@ -6,21 +6,25 @@ const path = {
         src: '*.html',
         dest: 'build'
     },
-    css: {
+    styles: {
         src: 'css/*.css',
         dest: 'build/css'
     },
-    js: {
+    scripts: {
         src: 'js/*.js',
         dest: 'build/js'
     },
     sw: {
-        src: '*.js',
+        src: '*sw.js',
         dest: 'build'
     },
     images: {
         src: 'img/*.{jpg,jpeg,png,gif,ico,svg}',
         dest: 'build/img'
+    },
+    data: {
+        src: 'data/*.json',
+        dest: 'build/data'
     }
 };
 
@@ -47,10 +51,15 @@ gulp.task('sw', async () => {
 		.pipe(gulp.dest(path.sw.dest))
 })
 
-gulp.task('res-images', async () => {
+gulp.task('images', async () => {
     return gulp.src(path.images.src)
 		.pipe(gulp.dest(path.images.dest));
 });
+
+gulp.task('data', () => {
+    return gulp.src(path.data.src)
+        .pipe(gulp.dest(path.data.dest));
+})
 
 gulp.task('watch', gulp.parallel(() => {
 	gulp.watch(path.html.src, gulp.parallel('html'));
@@ -60,4 +69,4 @@ gulp.task('watch', gulp.parallel(() => {
 	gulp.watch(path.sw.src, gulp.parallel('sw'));
 }));
 
-gulp.task('default', gulp.parallel('html', 'styles', 'sw', 'images', 'scripts', 'watch'));
+gulp.task('default', gulp.parallel('html', 'styles', 'sw', 'images', 'scripts', 'data', 'watch'));

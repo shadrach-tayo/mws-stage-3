@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 */
 registerServiceWorker = () => { 
   if(navigator.serviceWorker) {
-    navigator.serviceWorker.register('/sw.js', {scope: '/'})
+    navigator.serviceWorker.register('/sw.js', {scope: 'build/'})
     .then(reg => {
       let serviceWorker;
       
@@ -212,11 +212,13 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
  * Create restaurant HTML.
  */
 createRestaurantHTML = (restaurant) => {
+  let images = DBHelper.imageUrlForRestaurant(restaurant);
   const li = document.createElement('li');
-
   const image = document.createElement('img');
   image.className = 'restaurant-img';
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.src = `img/${images.small}`;
+  image.sizes = `(min-width: 600px) 25vw, (min-width: 500px) 50vw', 100vw`;
+  images.srcset = `img/${images.small} 100vw, img/${images} 200vw`;
   image.alt = restaurant.name;
   li.append(image);
 
@@ -237,8 +239,9 @@ createRestaurantHTML = (restaurant) => {
   more.href = DBHelper.urlForRestaurant(restaurant);
   li.append(more)
 
-  return li
+  return li;
 }
+
 
 /**
  * Add markers for current restaurants to the map.
