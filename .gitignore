@@ -1,3 +1,11 @@
 #dependencies
 /node_modules
 /responsive_images
+/css
+/data
+/img
+/js
+/index.html
+/restaurant.html
+/sw.js
+/package-lock.json
