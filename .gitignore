@@ -1,8 +1,4 @@
 #dependencies
 /node_modules
 /responsive_images
-/css
-/data
-/img
-/js
-!/build/
+

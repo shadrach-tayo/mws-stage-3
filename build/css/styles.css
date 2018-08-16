@@ -78,8 +78,8 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 
 #footer {
   /* height: 200px; */
-  background-color: #444;
-  color: #aaa;
+  background-color: #222222;
+  color: #cccccc;
   font-size: 8pt;
   letter-spacing: 1px;
   padding: 25px;
@@ -184,6 +184,12 @@ nav h1 a {
   padding: 20px;
   margin-bottom: 20px;
 }
+
+[role=label] {
+  font-size: 1.2rem;
+  color: #222222;
+}
+
 .filter-options h2 {
   color: white;
   font-size: 1.5rem;
@@ -245,7 +251,7 @@ nav h1 a {
   -webkit-padding-start: 10px;
 }
 #restaurants-list li {
-  background-color: #fff;
+  background-color: #eeeeee;
   font-family: Arial,sans-serif;
   min-height: 380px;
   padding: 0 0 10px;
@@ -281,16 +287,27 @@ nav h1 a {
 }
 
 #restaurants-list li a {
-  background-color: orange;
+  background-color: #bbb;
   border-bottom: 3px solid #eee;
-  color: #fff;
+  color: #222;
   display: inline-block;
-  font-size: 10pt;
+  font-size: 11pt;
+  font-weight: 600;
+  letter-spacing: 1px;
   margin: 0 0 0 30px;
   padding: 8px 30px 10px;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
+  -webkit-transition: background-color .2s ease-in;
+  transition: background-color .2s ease-in;
+}
+
+#restaurants-list li a:hover,
+#restaurants-list li a:focus {
+  outline: none;
+  background-color: #ff8000;
+  color: #eee;
 }
 
 @media screen and (max-width: 968px) {
