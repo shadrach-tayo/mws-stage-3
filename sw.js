@@ -57,8 +57,7 @@ self.addEventListener('fetch', event => {
 	let requestUrl = new URL(event.request.url);
 	
 	if(requestUrl.origin === location.origin) {
-		if(requestUrl.pathname === '/index.html') {
-			console.log('html thmlthml')
+		if(requestUrl.pathname === '/') {
 			event.respondWith(
 				caches.match('/index.html').then(response => {
 					if(response) return response;
@@ -74,7 +73,6 @@ self.addEventListener('fetch', event => {
 			return;
 		}
 		if(requestUrl.pathname.startsWith('/img/')) {
-			console.log('serving images');
 			event.respondWith(serveImages(event.request));
 			return;
 		}
