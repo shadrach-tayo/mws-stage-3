@@ -1,4 +1,4 @@
-const staticCacheName = 'mws-restaurant-project-1';
+const staticCacheName = 'mws-restaurant-project-2';
 const cloudFilesCache = 'mws-restaurant-cloudFiles-1';
 
 self.addEventListener('install', event => {
