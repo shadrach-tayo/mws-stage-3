@@ -46,7 +46,7 @@ registerServiceWorker = () => {
 
 /**
  * function to track update in serviceWorker
- */
+*/
 let refreshing = false;
 trackInstalling = (worker) => {
   worker.addEventListener('statechange', () => {
