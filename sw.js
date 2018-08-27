@@ -35,7 +35,6 @@ self.addEventListener('install', event => {
 						'./img/8_small.jpg',
 						'./img/9_small.jpg',
 						'./img/10_small.jpg',
-						'./data/restaurants.json'
 					])
 		}).catch(err => console.log(err, 'static assets failed to be cached'))
 	);
@@ -77,18 +76,6 @@ self.addEventListener('fetch', event => {
 			return;
 		}
 	}
-
-	/*if(requestUrl.pathname.includes('/')) {
-		console.log('request to the same origin');
-		if(requestUrl.pathname === location.pathname) {
-			event.respondWith(caches.match('./index.html'));
-			return;
-		} else if(requestUrl.pathname.startsWith('/img')){ 
-				console.log('request for image');
-				event.respondWith(serveImages(event.request));
-				return;
-		}
-	}*/
 
 	if(requestUrl.href.includes('googlecode.com/svn/trunk/normalize.css')) {
 		console.log('fetching cloudfile');

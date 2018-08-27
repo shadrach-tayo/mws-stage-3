@@ -17,11 +17,11 @@ class DBHelper {
    */
   static fetchRestaurants(callback) {
     let xhr = new XMLHttpRequest();
-    xhr.open('GET', DBHelper.DATABASE_URL);
+    xhr.open('GET', "http://localhost:1337/restaurants");
     xhr.onload = () => {
       if (xhr.status === 200) { // Got a success response from server!
-        const json = JSON.parse(xhr.responseText);
-        const restaurants = json.restaurants;
+        const restaurants = JSON.parse(xhr.responseText);
+        console.log(restaurants);
         callback(null, restaurants);
       } else { // Oops!. Got an error from server.
         const error = (`Request failed. Returned status of ${xhr.status}`);
@@ -60,6 +60,7 @@ class DBHelper {
         callback(error, null);
       } else {
         // Filter restaurants to have only given cuisine type
+        console.log(restaurants);
         const results = restaurants.filter(r => r.cuisine_type == cuisine);
         callback(null, results);
       }
