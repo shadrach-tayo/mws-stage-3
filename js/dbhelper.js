@@ -1,3 +1,17 @@
+ /*
+  * Open database
+  */
+ async function openDatabase() {
+  if(!navigator.serviceWorker) return;
+
+  return await idb.open('mws-store', 1, (upgradeDb) => {
+   var store = upgradeDb.createObjectStore('mws', {keyPath: "id"});
+   console.log(upgradeDb);
+   store.createIndex('id', 'id');
+  })
+}
+
+
 /**
  * Common database helper functions.
  */
@@ -16,19 +30,34 @@ class DBHelper {
    * Fetch all restaurants.
    */
   static fetchRestaurants(callback) {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', "http://localhost:1337/restaurants");
-    xhr.onload = () => {
-      if (xhr.status === 200) { // Got a success response from server!
-        const restaurants = JSON.parse(xhr.responseText);
-        console.log(restaurants);
+    this.dbPromise.then(db => {
+      let tx = db.transaction('mws', 'readwrite');
+      let store = tx.objectStore('mws');
+      return store.getAll();
+    }).then(restaurants => {
+      if(restaurants)
+        console.log('restaurant data found in database');
         callback(null, restaurants);
-      } else { // Oops!. Got an error from server.
-        const error = (`Request failed. Returned status of ${xhr.status}`);
-        callback(error, null);
-      }
-    };
-    xhr.send();
+        return;
+      fetch(`${DBHelper.DATABASE_URL}/restaurants`,
+        {
+          method: 'GET'
+      }).then(response => response.json())
+        .then(restaurants => {
+          console.log('restaurant data gotten from network');
+          console.log(restaurants);
+          this.dbPromise.then(db => {
+            if(!db) return;
+            let tx = db.transaction('mws', 'readwrite');
+            let store = tx.objectStore('mws');
+            let data = restaurants;
+            data.forEach(restaurant => store.put(restaurant));
+          }).catch(err => console.error(err));
+          callback(null, restaurants)
+        })
+        .catch(err => callback(err))
+    })
+  
   }
 
   /**
@@ -99,6 +128,7 @@ class DBHelper {
         if (neighborhood != 'all') { // filter by neighborhood
           results = results.filter(r => r.neighborhood == neighborhood);
         }
+        console.log(results);
         callback(null, results);
       }
     });
@@ -180,3 +210,5 @@ class DBHelper {
 
 }
 
+DBHelper.dbPromise = openDatabase();
+// dbPromise.then(db => console.log(db))

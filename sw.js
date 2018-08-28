@@ -12,8 +12,8 @@ self.addEventListener('install', event => {
 						'./js/dbhelper.js',
 						'./js/main.js',
 						'./js/restaurant_info.js',
+						"https://rawgit.com/jakearchibald/idb/master/lib/idb.js",
 						'https://unpkg.com/leaflet@1.3.1/dist/leaflet.css',
-						// '//normalize-css.googlecode.com/svn/trunk/normalize.css',
 						'https://unpkg.com/leaflet@1.3.1/dist/leaflet.js',
 						'./img/1.jpg',
 						'./img/2.jpg',
@@ -35,6 +35,10 @@ self.addEventListener('install', event => {
 						'./img/8_small.jpg',
 						'./img/9_small.jpg',
 						'./img/10_small.jpg',
+						'./img/restaurant-icons_192x192.png',
+						'./img/restaurant-icons_256x256.png',
+						'./img/restaurant-icons_512x512.png',
+						'./favicon.png'
 					])
 		}).catch(err => console.log(err, 'static assets failed to be cached'))
 	);
