@@ -31,7 +31,7 @@ class DBHelper {
    */
   static fetchRestaurants(callback) {
     this.dbPromise.then(db => {
-      let tx = db.transaction('mws', 'readwrite');
+      let tx = db.transaction('mws');
       let store = tx.objectStore('mws');
       return store.getAll();
     }).then(restaurants => {
@@ -44,8 +44,6 @@ class DBHelper {
           method: 'GET'
       }).then(response => response.json())
         .then(restaurants => {
-          console.log('restaurant data gotten from network');
-          console.log(restaurants);
           this.dbPromise.then(db => {
             if(!db) return;
             let tx = db.transaction('mws', 'readwrite');

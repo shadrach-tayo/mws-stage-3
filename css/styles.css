@@ -174,7 +174,7 @@ nav h1 a {
 /* ====================== Restaurant Filtering ====================== */
 .filter-options {
   height: auto;
-  background-color: #3397DB;
+  background-color: #3397db;
   align-items: center;
   padding: 20px;
   margin-bottom: 20px;
@@ -216,7 +216,7 @@ label p {
 
 .filter-options select:hover,
 .filter-options select:focus {
-  background-color: #E8E8E8;
+  background-color: #e8e8e8;
 }
 
 @media screen and (max-width: 460px) {
@@ -252,7 +252,7 @@ label p {
   font-family: Arial,sans-serif;
   min-height: 380px;
   padding: 0 0 10px;
-  box-shadow: 0 2px 10px 2px #A0A0A0FF;
+  box-shadow: 0 2px 10px 2px #a0a0a0ff;
   text-align: left;
   width: 270px;
 }
@@ -267,7 +267,7 @@ label p {
 }
 
 #restaurants-list li h1 {
-  color: #A80000;
+  color: #a80000;
   font-family: Arial,sans-serif;
   font-size: 14pt;
   font-weight: 200;
@@ -366,7 +366,7 @@ label p {
   display: block;
 }
 #restaurant-name {
-  color: #7A0000;
+  color: #7a0000;
   font-family: Arial,sans-serif;
   font-size: 20pt;
   font-weight: 200;
@@ -440,7 +440,7 @@ label p {
 
 
 #reviews-container h2 {
-  color: #AE0404;
+  color: #ae0404;
   font-size: 24pt;
   font-weight: 300;
   letter-spacing: -1px;
@@ -498,7 +498,7 @@ label p {
 
 .reviews-list__rating {
   padding: 5px 10px;
-  background-color: #A80000;
+  background-color: #a80000;
   max-width: 100px;
   font-size: 0.8rem;
   font-weight: bold;
