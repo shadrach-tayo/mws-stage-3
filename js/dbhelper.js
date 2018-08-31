@@ -35,27 +35,30 @@ class DBHelper {
       let store = tx.objectStore('mws');
       return store.getAll();
     }).then(restaurants => {
-      if(restaurants)
-        console.log('restaurant data found in database');
+      console.log(restaurants.length > 0);
+      if(restaurants.length > 0) {
         callback(null, restaurants);
         return;
-      fetch(`${DBHelper.DATABASE_URL}/restaurants`,
-        {
-          method: 'GET'
-      }).then(response => response.json())
-        .then(restaurants => {
-          this.dbPromise.then(db => {
-            if(!db) return;
-            let tx = db.transaction('mws', 'readwrite');
-            let store = tx.objectStore('mws');
-            let data = restaurants;
-            data.forEach(restaurant => store.put(restaurant));
-          }).catch(err => console.error(err));
-          callback(null, restaurants)
-        })
-        .catch(err => callback(err))
-    })
-  
+      } else {
+          fetch(`${DBHelper.DATABASE_URL}/restaurants`,
+            {
+              method: 'GET'
+            }
+          ).then(response => response.json())
+          .then(restaurants => {
+            this.dbPromise.then(db => {
+              if(!db) return;
+              console.log('writing to database');
+              let tx = db.transaction('mws', 'readwrite');
+              let store = tx.objectStore('mws');
+              let data = restaurants;
+              data.forEach(restaurant => store.put(restaurant));
+            }).catch(err => console.error(err));
+            callback(null, restaurants)
+          })
+          .catch(err => callback(err))
+      }
+    });
   }
 
   /**
@@ -144,7 +147,7 @@ class DBHelper {
         // Get all neighborhoods from all restaurants
         const neighborhoods = restaurants.map((v, i) => restaurants[i].neighborhood)
         // Remove duplicates from neighborhoods
-        const uniqueNeighborhoods = neighborhoods.filter((v, i) => neighborhoods.indexOf(v) == i)
+        const uniqueNeighborhoods = neighborhoods.filter((v, i) => neighborhoods.indexOf(v) == i);
         callback(null, uniqueNeighborhoods);
       }
     });
