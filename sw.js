@@ -1,5 +1,5 @@
-const staticCacheName = 'mws-restaurant-2';
-const cloudFilesCache = 'mws-restaurant-cloudFiles-1';
+const staticCacheName = 'v1';
+// const cloudFilesCache = 'mws-restaurant-cloudFiles-1';
 
 self.addEventListener('install', event => {
 	event.waitUntil(
@@ -12,7 +12,7 @@ self.addEventListener('install', event => {
 						'./js/dbhelper.js',
 						'./js/main.js',
 						'./js/restaurant_info.js',
-						"https://rawgit.com/jakearchibald/idb/master/lib/idb.js",
+						'https://rawgit.com/jakearchibald/idb/master/lib/idb.js',
 						'https://unpkg.com/leaflet@1.3.1/dist/leaflet.css',
 						'https://unpkg.com/leaflet@1.3.1/dist/leaflet.js',
 						'./img/1.jpg',
@@ -108,6 +108,10 @@ serveImages = (request) => {
 	});
 }
 
+/*
+function to serve cloud files from cache and
+fallback to network and serve then cache
+
 serveStaticCloudFile = (request) => {
 	let networkFetch = fetch(request);
 	return caches.open(serveStaticCloudFile).then(cache => {
@@ -120,6 +124,7 @@ serveStaticCloudFile = (request) => {
 		});
 	});
 }
+*/
 
 self.addEventListener('message', event => {
 	if(event.data.action == 'skipWaiting') {

@@ -30,12 +30,15 @@ class DBHelper {
    * Fetch all restaurants.
    */
   static fetchRestaurants(callback) {
+    // get the database instance open a transaction in the
+    // 'mws' object store and return all;
     this.dbPromise.then(db => {
       let tx = db.transaction('mws');
       let store = tx.objectStore('mws');
       return store.getAll();
     }).then(restaurants => {
-      console.log(restaurants.length > 0);
+      // check if restaurant was found in the database
+      // and return other wise fetch from network
       if(restaurants.length > 0) {
         callback(null, restaurants);
         return;
@@ -48,7 +51,8 @@ class DBHelper {
           .then(restaurants => {
             this.dbPromise.then(db => {
               if(!db) return;
-              console.log('writing to database');
+              // open a readwrite transaction and store 
+              // restaurants data from the network in the database
               let tx = db.transaction('mws', 'readwrite');
               let store = tx.objectStore('mws');
               let data = restaurants;
