@@ -135,13 +135,13 @@ class DBHelper {
   static fetchNeighborhoods(callback) {
     // Fetch all restaurants
 
-    DBHelper.fetchRestaurants()
+    return DBHelper.fetchRestaurants()
     .then(restaurants => {
       // Get all neigbhourhoods from the restaurants
       const neighborhoods = restaurants.map((v, i) => restaurants[i].neighborhood);
       // filter to remove unique neigbhourhoods
       const uniqueNeighborhoods = neighborhoods.filter((v, i) => neighborhoods.indexOf(v) == i);
-      callback(null, uniqueNeighborhoods);
+      return uniqueNeighborhoods;
     }).catch(err => callback(err))
   }
 
@@ -150,13 +150,13 @@ class DBHelper {
    */
   static fetchCuisines(callback) {
     // Fetch all restaurants
-    DBHelper.fetchRestaurants()
+    return DBHelper.fetchRestaurants()
     .then(restaurants => {
        // Get all cuisines from all restaurants
        const cuisines = restaurants.map((v, i) => restaurants[i].cuisine_type)
        // Remove duplicates from cuisines
        const uniqueCuisines = cuisines.filter((v, i) => cuisines.indexOf(v) == i)
-       callback(null, uniqueCuisines);
+       return uniqueCuisines;
     })
     .catch(err => callback(err));
   }
