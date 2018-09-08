@@ -76,10 +76,10 @@ class DBHelper {
    * Fetch a restaurant by its ID.
    */
   static fetchRestaurantById(id, callback) {
-    DBHelper.fetchRestaurants()
+    return DBHelper.fetchRestaurants()
     .then(restaurants => {
       const restaurant = restaurants.find(r => r.id == id);
-      callback(null, restaurant);
+      return restaurant;
     })
     .catch(err => callback(err));
   }
@@ -88,6 +88,7 @@ class DBHelper {
    * Fetch restaurants by a cuisine type with proper error handling.
    */
   static fetchRestaurantByCuisine(cuisine, callback) {
+    console.log('fetch restaurant by cuisine called');
     // Fetch all restaurants  with proper error handling
     DBHelper.fetchRestaurants()
     .then(restaurants => {
@@ -102,11 +103,12 @@ class DBHelper {
    * Fetch restaurants by a neighborhood with proper error handling.
    */
   static fetchRestaurantByNeighborhood(neighborhood, callback) {
-    DBHelper.fetchRestaurants()
+    console.log('fetch restaurant by neighbourhood called');
+    return DBHelper.fetchRestaurants()
     .then(restaurants => {
       // filter restaurants to have only given neighbourhood
       const results = restaurants.filter(r => r.neighborhood == neighborhood);
-      callback(null, results);
+      return results;
     }).catch(err => callback(err))
   }
 
@@ -115,7 +117,7 @@ class DBHelper {
    */
   static fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, callback) {
     // Fetch all restaurants
-    DBHelper.fetchRestaurants()
+    return DBHelper.fetchRestaurants()
     .then(restaurants => {
       let results = restaurants
       if (cuisine != 'all') { // filter by cuisine
@@ -124,7 +126,7 @@ class DBHelper {
       if (neighborhood != 'all') { // filter by neighborhood
         results = results.filter(r => r.neighborhood == neighborhood);
       }
-      callback(null, results);
+      return results;
     })
     .catch(err => callback(err));
   }
