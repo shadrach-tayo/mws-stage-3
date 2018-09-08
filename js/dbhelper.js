@@ -29,7 +29,7 @@ class DBHelper {
   /**
    * Fetch all restaurants.
    */
-  static fetchRestaurants(callback) {
+  static fetchRestaurants() {
     // get the database instance open a transaction in the
     // 'mws' object store and return all;
     
@@ -75,19 +75,19 @@ class DBHelper {
   /**
    * Fetch a restaurant by its ID.
    */
-  static fetchRestaurantById(id, callback) {
+  static fetchRestaurantById(id) {
     return DBHelper.fetchRestaurants()
     .then(restaurants => {
       const restaurant = restaurants.find(r => r.id == id);
       return restaurant;
     })
-    .catch(err => callback(err));
+    .catch(err => err);
   }
 
   /**
    * Fetch restaurants by a cuisine type with proper error handling.
    */
-  static fetchRestaurantByCuisine(cuisine, callback) {
+  static fetchRestaurantByCuisine(cuisine) {
     console.log('fetch restaurant by cuisine called');
     // Fetch all restaurants  with proper error handling
     DBHelper.fetchRestaurants()
@@ -96,26 +96,26 @@ class DBHelper {
       const results = restaurants.filter(r => r.cuisine_type == cuisine);
       callback(null, results);
     })
-    .catch(err => callback(err));
+    .catch(err => err);
   }
 
   /**
    * Fetch restaurants by a neighborhood with proper error handling.
    */
-  static fetchRestaurantByNeighborhood(neighborhood, callback) {
+  static fetchRestaurantByNeighborhood(neighborhood) {
     console.log('fetch restaurant by neighbourhood called');
     return DBHelper.fetchRestaurants()
     .then(restaurants => {
       // filter restaurants to have only given neighbourhood
       const results = restaurants.filter(r => r.neighborhood == neighborhood);
       return results;
-    }).catch(err => callback(err))
+    }).catch(err => err);
   }
 
   /**
    * Fetch restaurants by a cuisine and a neighborhood with proper error handling.
    */
-  static fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, callback) {
+  static fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood) {
     // Fetch all restaurants
     return DBHelper.fetchRestaurants()
     .then(restaurants => {
@@ -128,15 +128,14 @@ class DBHelper {
       }
       return results;
     })
-    .catch(err => callback(err));
+    .catch(err => err);
   }
 
   /**
    * Fetch all neighborhoods with proper error handling.
    */
-  static fetchNeighborhoods(callback) {
+  static fetchNeighborhoods() {
     // Fetch all restaurants
-
     return DBHelper.fetchRestaurants()
     .then(restaurants => {
       // Get all neigbhourhoods from the restaurants
@@ -144,13 +143,13 @@ class DBHelper {
       // filter to remove unique neigbhourhoods
       const uniqueNeighborhoods = neighborhoods.filter((v, i) => neighborhoods.indexOf(v) == i);
       return uniqueNeighborhoods;
-    }).catch(err => callback(err))
+    }).catch(err => err);
   }
 
   /**
    * Fetch all cuisines with proper error handling.
    */
-  static fetchCuisines(callback) {
+  static fetchCuisines() {
     // Fetch all restaurants
     return DBHelper.fetchRestaurants()
     .then(restaurants => {
@@ -160,7 +159,7 @@ class DBHelper {
        const uniqueCuisines = cuisines.filter((v, i) => cuisines.indexOf(v) == i)
        return uniqueCuisines;
     })
-    .catch(err => callback(err));
+    .catch(err => err);
   }
 
   /**
@@ -190,16 +189,6 @@ class DBHelper {
       marker.addTo(newMap);
     return marker;
   } 
-  /* static mapMarkerForRestaurant(restaurant, map) {
-    const marker = new google.maps.Marker({
-      position: restaurant.latlng,
-      title: restaurant.name,
-      url: DBHelper.urlForRestaurant(restaurant),
-      map: map,
-      animation: google.maps.Animation.DROP}
-    );
-    return marker;
-  } */
 
 }
 

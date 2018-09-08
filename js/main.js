@@ -140,18 +140,6 @@ initMap = () => {
 
   updateRestaurants();
 }
-/* window.initMap = () => {
-  let loc = {
-    lat: 40.722216,
-    lng: -73.987501
-  };
-  self.map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 12,
-    center: loc,
-    scrollwheel: false
-  });
-  updateRestaurants();
-} */
 
 /**
  * Update page and map for current restaurants.
@@ -171,7 +159,7 @@ updateRestaurants = () => {
     resetRestaurants(restaurants);
     fillRestaurantsHTML();
   })
-  .catch(err => console.log('could not fetch restaurant by cuisine and neighbourhood'));
+  .catch(err => console.error('could not fetch restaurant by cuisine and neighbourhood'));
 }
 
 /**
@@ -251,14 +239,5 @@ addMarkersToMap = (restaurants = self.restaurants) => {
   });
 
 } 
-/* addMarkersToMap = (restaurants = self.restaurants) => {
-  restaurants.forEach(restaurant => {
-    // Add marker to the map
-    const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.map);
-    google.maps.event.addListener(marker, 'click', () => {
-      window.location.href = marker.url
-    });
-    self.markers.push(marker);
-  });
-} */
+
 
