@@ -32,8 +32,7 @@ registerServiceWorker = () => {
         serviceWorker = reg.active;
 
       if(serviceWorker) {
-        console.log('service worker has been registered');
-        console.log(serviceWorker);
+        console.log('[service-worker] has been registered', reg);
       }
 
       // Add listener to track serviceWorker update event
