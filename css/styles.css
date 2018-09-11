@@ -252,9 +252,11 @@ label p {
   font-family: Arial,sans-serif;
   min-height: 380px;
   padding: 0 0 10px;
-  box-shadow: 0 2px 10px 2px #a0a0a0ff;
+  box-shadow: 0 3px 22px 1px #a0a0a0ff;
   text-align: left;
   width: 270px;
+  align-self: center;
+  justify-self: center;
 }
 
 #restaurants-list .restaurant-img {
@@ -279,22 +281,23 @@ label p {
 
 #restaurants-list p {
   margin-left: 10px;
-  font-size: 11pt;
+  font-size: 1rem;
 }
 
 #restaurants-list li a {
-  background-color: #bbb;
-  border-bottom: 3px solid #eee;
+  background-color: #d0520d;
+  border-bottom: none;
+  border-radius: 15px;
   color: #222;
   display: inline-block;
-  font-size: 11pt;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: 1px;
   margin: 0 0 0 30px;
   padding: 8px 30px 10px;
   text-align: center;
   text-decoration: none;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   transition: background-color .2s ease-in;
 }
 
