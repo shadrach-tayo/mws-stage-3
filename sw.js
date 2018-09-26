@@ -1,45 +1,45 @@
-const staticCacheName = 'v1';
-// const cloudFilesCache = 'mws-restaurant-cloudFiles-1';
+const staticCacheName = 'v3';
+
+const filesToCache = [
+	'/',
+	'./restaurant.html',
+	'./css/styles.css',
+	'./js/dbhelper.js',
+	'./js/main.js',
+	'./js/restaurant_info.js',
+	'https://rawgit.com/jakearchibald/idb/master/lib/idb.js',
+	'https://unpkg.com/leaflet@1.3.1/dist/leaflet.css',
+	'https://unpkg.com/leaflet@1.3.1/dist/leaflet.js',
+	'./img/1.jpg',
+	'./img/2.jpg',
+	'./img/3.jpg',
+	'./img/4.jpg',
+	'./img/5.jpg',
+	'./img/6.jpg',
+	'./img/7.jpg',
+	'./img/8.jpg',
+	'./img/9.jpg',
+	'./img/10.jpg',
+	'./img/1_small.jpg',
+	'./img/2_small.jpg',
+	'./img/3_small.jpg',
+	'./img/4_small.jpg',
+	'./img/5_small.jpg',
+	'./img/6_small.jpg',
+	'./img/7_small.jpg',
+	'./img/8_small.jpg',
+	'./img/9_small.jpg',
+	'./img/10_small.jpg',
+	'./img/restaurant-icons_192x192.png',
+	'./img/restaurant-icons_256x256.png',
+	'./img/restaurant-icons_512x512.png',
+	'./favicon.png'
+];
 
 self.addEventListener('install', event => {
 	event.waitUntil(
 		caches.open(staticCacheName).then(cache => {
-				return cache.addAll(
-					[
-						'/index.html',
-						'./restaurant.html',
-						'./css/styles.css',
-						'./js/dbhelper.js',
-						'./js/main.js',
-						'./js/restaurant_info.js',
-						'https://rawgit.com/jakearchibald/idb/master/lib/idb.js',
-						'https://unpkg.com/leaflet@1.3.1/dist/leaflet.css',
-						'https://unpkg.com/leaflet@1.3.1/dist/leaflet.js',
-						'./img/1.jpg',
-						'./img/2.jpg',
-						'./img/3.jpg',
-						'./img/4.jpg',
-						'./img/5.jpg',
-						'./img/6.jpg',
-						'./img/7.jpg',
-						'./img/8.jpg',
-						'./img/9.jpg',
-						'./img/10.jpg',
-						'./img/1_small.jpg',
-						'./img/2_small.jpg',
-						'./img/3_small.jpg',
-						'./img/4_small.jpg',
-						'./img/5_small.jpg',
-						'./img/6_small.jpg',
-						'./img/7_small.jpg',
-						'./img/8_small.jpg',
-						'./img/9_small.jpg',
-						'./img/10_small.jpg',
-						'./img/restaurant-icons_192x192.png',
-						'./img/restaurant-icons_256x256.png',
-						'./img/restaurant-icons_512x512.png',
-						'./favicon.png'
-					])
+				return cache.addAll(filesToCache)
 		}).catch(err => console.log(err, 'static assets failed to be cached'))
 	);
 });
@@ -60,15 +60,6 @@ self.addEventListener('fetch', event => {
 	let requestUrl = new URL(event.request.url);
 	
 	if(requestUrl.origin === location.origin) {
-		if(requestUrl.pathname === '/') {
-			event.respondWith(
-				caches.match('/index.html').then(response => {
-					if(response) return response;
-				})
-				.catch(err => console.log('err getting index.html'))
-			);
-			return;
-		}
 		if(requestUrl.pathname === '/restaurant.html') {
 			event.respondWith(
 				caches.match('/restaurant.html')
