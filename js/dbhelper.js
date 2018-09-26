@@ -108,7 +108,7 @@ class DBHelper {
     return DBHelper.fetchRestaurants()
     .then(restaurants => {
       console.log('fetched ', restaurants);
-      restaurant = restaurants.filter(r => r.id === id);
+      restaurant = restaurants.filter(r => r.id == id)[0];
       console.log(restaurant)
       return restaurant;
     })

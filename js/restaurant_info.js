@@ -55,6 +55,7 @@ initMap = () => {
 fetchRestaurantFromURL = () => {
   return new Promise((resolve, reject) => {
     if (self.restaurant) { // restaurant already fetched!
+      console.log('self.restaurant is', self.restaurant)
       resolve(self.restaurant);
       return;
     }
