@@ -2,7 +2,10 @@
   * Open database
   */
  async function openDatabase() {
-  if(!navigator.serviceWorker) return;
+  if(!navigator.serviceWorker) {
+    console.warn('[service-worker] is not supported in this browser');
+    return;
+  }
 
   return await idb.open('mws-store', 1, (upgradeDb) => {
    var store = upgradeDb.createObjectStore('mws', {keyPath: "id"});
@@ -30,19 +33,18 @@ class DBHelper {
    * Fetch all restaurants.
    */
   static fetchRestaurants() {
-    // get the database instance open a transaction in the
+    // get the database instance and open a transaction in the
     // 'mws' object store and return all;
     
     // wrap the function in an promise to express asynchrony
     return new Promise((resolve, reject) => {
-      this.dbPromise.then(db => {
-        let tx = db.transaction('mws');
-        let store = tx.objectStore('mws');
-        return store.getAll();
-      }).then(restaurants => {
+      // first attempt to fetch from database
+      this.fetchRestaurantsFromDb()
+      .then(restaurants => {
         // check if restaurant was found in the database
-        // and return other wise fetch from network
+        // and return otherwise fetch from network
         if(restaurants.length > 0) {
+          console.log('found in database');
           resolve(restaurants);
         } else {
             return fetch(`${DBHelper.DATABASE_URL}/restaurants`,
@@ -50,35 +52,64 @@ class DBHelper {
                 method: 'GET'
               }
             ).then(response => response.json())
-            .then(restaurants => {
-              this.dbPromise.then(db => {
-                if(!db) return;
-                // open a readwrite transaction and store 
-                // restaurants data from the network in the database
-                let tx = db.transaction('mws', 'readwrite');
-                let store = tx.objectStore('mws');
-                let data = restaurants;
-                data.forEach(restaurant => store.put(restaurant));
-              }).catch(err => {
-                reject(err);
-              });
-              console.log(restaurants);
+            .then(async restaurants => {
+              // add restaurants data to database
+              await this.addRestaurantsToDb(restaurants)
               resolve(restaurants)
             })
-            .catch(err => err);
+            .catch(err => reject(err));
         }
       });
     });
-
   }
 
   /**
+   * Method to get all restaurants the database
+   */
+
+   static fetchRestaurantsFromDb() {
+    return this.dbPromise.then(async db => {
+      let tx = db.transaction('mws');
+      let store = tx.objectStore('mws');
+      return store.getAll();
+    })
+   }
+
+  /**
+   * Method to get restaurant from database by Id: INCOMPLETE
+   */
+  static fetchRestaurantFromDbById(id) {
+    console.log('attempting to fetch from db by id', id);
+    return this.dbPromise.then(async db => {
+      const index = db.transaction('mws')
+        .objectStore('mws').index('id');
+        console.log(index.get(id));
+      return index.get(id);
+    });
+  }
+
+   /**
+    * Method to Add restaurants to Database
+    */
+   static addRestaurantsToDb(restaurants) {
+     this.dbPromise.then(async db => {
+       let tx = db.transaction('mws', 'readwrite');
+       let store = tx.objectStore('mws');
+       await restaurants.forEach(res => store.put(res))
+       return tx.complete;
+     })
+   }
+
+  /**
    * Fetch a restaurant by its ID.
+   * TODO: change to query data from database by id 
    */
   static fetchRestaurantById(id) {
     return DBHelper.fetchRestaurants()
     .then(restaurants => {
-      const restaurant = restaurants.find(r => r.id == id);
+      console.log('fetched ', restaurants);
+      restaurant = restaurants.filter(r => r.id === id);
+      console.log(restaurant)
       return restaurant;
     })
     .catch(err => err);
