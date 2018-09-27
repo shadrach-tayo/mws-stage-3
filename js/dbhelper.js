@@ -79,14 +79,14 @@ class DBHelper {
    * Method to get restaurant from database by Id: INCOMPLETE
    */
   static fetchRestaurantFromDbById(id) {
-    console.log('attempting to fetch from db by id', id);
     return this.dbPromise.then(async db => {
-      const index = db.transaction('mws')
-        .objectStore('mws').index('id');
-        console.log(index.get(id));
-      return index.get(id);
+      const store = db.transaction('mws').objectStore('mws')
+      const idIndex = store.index('id');
+      // +id --> coerce the value of id to type Number if it's a string
+      return idIndex.get(id);
     });
   }
+
 
    /**
     * Method to Add restaurants to Database
@@ -105,14 +105,20 @@ class DBHelper {
    * TODO: change to query data from database by id 
    */
   static fetchRestaurantById(id) {
-    return DBHelper.fetchRestaurants()
-    .then(restaurants => {
-      console.log('fetched ', restaurants);
-      restaurant = restaurants.filter(r => r.id == id)[0];
-      console.log(restaurant)
-      return restaurant;
-    })
-    .catch(err => err);
+    return DBHelper.fetchRestaurantFromDbById(id)
+    .then(restaurant => {
+      if(restaurant !== undefined) {
+        console.log('fetched from db by id')
+        return restaurant;
+      } else {
+        return this.fetchRestaurants().then(restaurants => {
+          console.log(restaurants);
+          console.log('fetched from network')
+          return restaurants.filter(r => r.id == id)[0];
+        })
+      }
+    }).catch(err => console.log(err))
+    
   }
 
   /**
