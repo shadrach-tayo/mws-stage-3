@@ -83,7 +83,7 @@ class DBHelper {
       const store = db.transaction('mws').objectStore('mws')
       const idIndex = store.index('id');
       // +id --> coerce the value of id to type Number if it's a string
-      return idIndex.get(id);
+      return idIndex.get(+id);
     });
   }
 
