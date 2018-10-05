@@ -1,4 +1,4 @@
-const staticCacheName = 'v3';
+const staticCacheName = 'v1';
 
 const filesToCache = [
 	'/',
@@ -33,6 +33,8 @@ const filesToCache = [
 	'./img/restaurant-icons_192x192.png',
 	'./img/restaurant-icons_256x256.png',
 	'./img/restaurant-icons_512x512.png',
+	'./img/neighourhood.svg',
+	'./img/cuisine.svg',
 	'./favicon.png'
 ];
 

@@ -6,12 +6,12 @@
     console.warn('[service-worker] is not supported in this browser');
     return;
   }
-
   return await idb.open('mws-store', 1, (upgradeDb) => {
-   var store = upgradeDb.createObjectStore('mws', {keyPath: "id"});
-   console.log(upgradeDb);
-   store.createIndex('id', 'id');
-  })
+    var store = upgradeDb.createObjectStore('mws', {keyPath: "id"});
+    console.log(upgradeDb);
+    store.createIndex('id', 'id');
+  });
+  
 }
 
 

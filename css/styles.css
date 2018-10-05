@@ -207,43 +207,82 @@ label p {
 }
 
 .filter-select {
-  width: 100%;
+  width: 80%;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(2, 200px);
+  grid-template-columns: repeat(1, 1fr);
   grid-gap: 20px;
   align-self: center;
   justify-content: center;
 }
 
-.filter-options select {
-  background-color: white;
-  border: 1px solid #fff;
+select {
+  /* css variable local to only this selector and children selectors*/
+  --background-pad: 20px;
+  border: 1px solid var(--color-grey);
+  border-radius: 5px;
+  color: #fff;
+  width: 100%;
+  max-width: 900px;
+  height: 45px;
   font-family: Arial,sans-serif;
   font-size: 11pt;
-  height: 35px;
+  text-align: center;
   letter-spacing: 0;
   padding: 0 10px;
-  width: 200px;
+  padding-left: 40px;
+  appearance: none;
+  cursor: pointer;
+  transition: all .3s;
+  outline: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
-.filter-options select::before {
-  content: "";
-  display: inline-block;
-  position: absolute;
-  top: 0;
-  padding: 20px;
-  background: #01447e;
+select option {
+  background-color: #739;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
 }
 
-.filter-options select:hover,
-.filter-options select:focus {
-  background-color: #e8e8e8;
+select option[selected] {
+  font-weight: bold;
+}
+
+select option:hover,
+select option:focus {
+  background-color: #df6666;
+}
+
+select.neighborhood {
+  background: -25px center / var(--background-pad) 100% no-repeat url(../img/neighbourhood.svg);
+}
+
+select.neighborhood:hover,
+select.neighborhood:focus {
+  background: 10px center / var(--background-pad) 100% no-repeat url(../img/neighbourhood.svg);
+}
+
+select.cuisine {
+  background: -25px center / var(--background-pad) 100% no-repeat url(../img/cuisine.svg);
+}
+
+select.cuisine:hover,
+select.cuisine:focus {
+  background: 10px center / var(--background-pad) 100% no-repeat url(../img/cuisine.svg);
+}
+
+select:hover,
+select:focus {
+  border-color: #fff;
 }
 
 @media screen and (max-width: 460px) {
   .filter-select {
       grid-template-columns: 200px;
       grid-gap: 10px;
+      width: 100%;
   }
 }
 
