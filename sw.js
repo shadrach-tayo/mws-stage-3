@@ -37,11 +37,7 @@ const filesToCache = [
 ];
 
 self.addEventListener('install', event => {
-	event.waitUntil(
-		caches.open(staticCacheName).then(cache => {
-				return cache.addAll(filesToCache)
-		}).catch(err => console.log(err, 'static assets failed to be cached'))
-	);
+	event.waitUntil(preCache());
 });
 
 self.addEventListener('activate', event => {
@@ -61,15 +57,19 @@ self.addEventListener('fetch', event => {
 	
 	if(requestUrl.origin === location.origin) {
 		if(requestUrl.pathname === '/restaurant.html') {
+			console.log('fetching', requestUrl.pathname);
 			event.respondWith(
 				caches.match('/restaurant.html')
 			);
+			console.log(requestUrl.pathname);
 			return;
 		}
-		if(requestUrl.pathname.startsWith('/img/')) {
-			event.respondWith(serveImages(event.request));
-			return;
-		}
+		
+	}
+
+	if(requestUrl.pathname.startsWith('/img/')) {
+		event.respondWith(serveImages(event.request));
+		return;
 	}
 
 	if(requestUrl.href.includes('googlecode.com/svn/trunk/normalize.css')) {
@@ -84,6 +84,13 @@ self.addEventListener('fetch', event => {
 		})
 	);
 });
+
+function preCache() {
+	caches.open(staticCacheName).then(cache => {
+		cache.addAll(filesToCache)
+			.catch(err => console.log(err, 'static assets failed to be cached'))
+	})
+}
 
 serveImages = (request) => {
 	let networkFetch = fetch(request);
