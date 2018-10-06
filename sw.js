@@ -1,4 +1,4 @@
-const staticCacheName = 'v1';
+const staticCacheName = 'v3';
 
 const filesToCache = [
 	'/',
@@ -30,20 +30,16 @@ const filesToCache = [
 	'./img/8_small.jpg',
 	'./img/9_small.jpg',
 	'./img/10_small.jpg',
+	'./img/neighbourhood.svg',
+	'./img/cuisine.svg',
 	'./img/restaurant-icons_192x192.png',
 	'./img/restaurant-icons_256x256.png',
 	'./img/restaurant-icons_512x512.png',
-	'./img/neighourhood.svg',
-	'./img/cuisine.svg',
 	'./favicon.png'
 ];
 
 self.addEventListener('install', event => {
-	event.waitUntil(
-		caches.open(staticCacheName).then(cache => {
-				return cache.addAll(filesToCache)
-		}).catch(err => console.log(err, 'static assets failed to be cached'))
-	);
+	event.waitUntil(preCache());
 });
 
 self.addEventListener('activate', event => {
@@ -63,15 +59,18 @@ self.addEventListener('fetch', event => {
 	
 	if(requestUrl.origin === location.origin) {
 		if(requestUrl.pathname === '/restaurant.html') {
+			console.log('fetching', requestUrl.pathname);
 			event.respondWith(
 				caches.match('/restaurant.html')
 			);
 			return;
 		}
-		if(requestUrl.pathname.startsWith('/img/')) {
-			event.respondWith(serveImages(event.request));
-			return;
-		}
+		
+	}
+
+	if(requestUrl.pathname.startsWith('/img/')) {
+		event.respondWith(serveImages(event.request));
+		return;
 	}
 
 	if(requestUrl.href.includes('googlecode.com/svn/trunk/normalize.css')) {
@@ -86,6 +85,13 @@ self.addEventListener('fetch', event => {
 		})
 	);
 });
+
+function preCache() {
+	caches.open(staticCacheName).then(cache => {
+		cache.addAll(filesToCache)
+			.catch(err => console.log(err, 'static assets failed to be cached'))
+	})
+}
 
 serveImages = (request) => {
 	let networkFetch = fetch(request);

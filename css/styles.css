@@ -241,18 +241,13 @@ select {
 
 select option {
   background-color: #739;
-  border: none;
   cursor: pointer;
   font-size: 1rem;
 }
 
-select option[selected] {
-  font-weight: bold;
-}
-
 select option:hover,
 select option:focus {
-  background-color: #df6666;
+  background-color: #d81d1d;
 }
 
 select.neighborhood {
