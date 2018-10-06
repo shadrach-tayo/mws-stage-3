@@ -30,6 +30,8 @@ const filesToCache = [
 	'./img/8_small.jpg',
 	'./img/9_small.jpg',
 	'./img/10_small.jpg',
+	'./img/neighbourhood.svg',
+	'./img/cuisine.svg',
 	'./img/restaurant-icons_192x192.png',
 	'./img/restaurant-icons_256x256.png',
 	'./img/restaurant-icons_512x512.png',
