@@ -1,4 +1,4 @@
-const staticCacheName = 'v3';
+const staticCacheName = 'v1';
 
 const filesToCache = [
 	'/',
@@ -92,6 +92,7 @@ function preCache() {
 			.catch(err => console.log(err, 'static assets failed to be cached'))
 	})
 }
+
 
 serveImages = (request) => {
 	let networkFetch = fetch(request);
