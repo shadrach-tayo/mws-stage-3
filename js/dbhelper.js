@@ -19,7 +19,6 @@
  * Common database helper functions.
  */
 class DBHelper {
-
   /**
    * Database URL.
    * Change this to restaurants.json file location on your server.
@@ -140,7 +139,7 @@ class DBHelper {
    * Fetch restaurants by a neighborhood with proper error handling.
    */
   static fetchRestaurantByNeighborhood(neighborhood) {
-    console.log('fetch restaurant by neighbourhood called');
+    console.log('fetching restaurant by neighbourhood called');
     return DBHelper.fetchRestaurants()
     .then(restaurants => {
       // filter restaurants to have only given neighbourhood
@@ -180,7 +179,7 @@ class DBHelper {
       // filter to remove unique neigbhourhoods
       const uniqueNeighborhoods = neighborhoods.filter((v, i) => neighborhoods.indexOf(v) == i);
       return uniqueNeighborhoods;
-    }).catch(err => err);
+    }).catch(err => console.log(err));
   }
 
   /**
@@ -216,7 +215,7 @@ class DBHelper {
   /**
    * Map marker for a restaurant.
    */
-   static mapMarkerForRestaurant(restaurant, map) {
+   static mapMarkerForRestaurant(restaurant, newMap) {
     // https://leafletjs.com/reference-1.3.0.html#marker  
     const marker = new L.marker([restaurant.latlng.lat, restaurant.latlng.lng],
       {title: restaurant.name,
