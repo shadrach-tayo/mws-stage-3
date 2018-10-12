@@ -1,24 +1,24 @@
- /*
-  * Open database
-  */
- async function openDatabase() {
-  if(!navigator.serviceWorker) {
-    console.warn('[service-worker] is not supported in this browser');
-    return;
-  }
-  return await idb.open('mws-store', 1, (upgradeDb) => {
-    var store = upgradeDb.createObjectStore('mws', {keyPath: "id"});
-    console.log(upgradeDb);
-    store.createIndex('id', 'id');
-  });
-  
-}
-
-
 /**
  * Common database helper functions.
  */
 class DBHelper {
+
+  /*
+  * Open database
+  */
+  static openDatabase() {
+    if(!navigator.serviceWorker) {
+      console.warn('[service-worker] is not supported in this browser');
+      return;
+    }
+    return idb.open('mws-store', 1, (upgradeDb) => {
+      var store = upgradeDb.createObjectStore('mws', {keyPath: "id"});
+      console.log(upgradeDb);
+      store.createIndex('id', 'id');
+    });
+    
+  }
+  
   /**
    * Database URL.
    * Change this to restaurants.json file location on your server.
@@ -179,7 +179,7 @@ class DBHelper {
       // filter to remove unique neigbhourhoods
       const uniqueNeighborhoods = neighborhoods.filter((v, i) => neighborhoods.indexOf(v) == i);
       return uniqueNeighborhoods;
-    }).catch(err => console.log(err));
+    }).catch(err => console.error(err," : couldn't fetch neighbourhoods"));
   }
 
   /**
@@ -228,5 +228,4 @@ class DBHelper {
 
 }
 
-DBHelper.dbPromise = openDatabase();
-// dbPromise.then(db => console.log(db))
+DBHelper.dbPromise = DBHelper.openDatabase();
