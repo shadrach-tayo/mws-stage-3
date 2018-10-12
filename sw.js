@@ -1,4 +1,4 @@
-const staticCacheName = 'v2';
+const staticCacheName = 'v4';
 
 const filesToCache = [
 	'/',
@@ -7,7 +7,7 @@ const filesToCache = [
 	'./js/restaurantdb.js',
 	'./js/main.js',
 	'./js/restaurant_info.js',
-	'https://rawgit.com/jakearchibald/idb/master/lib/idb.js',
+	'/js/idb.js',
 	'https://unpkg.com/leaflet@1.3.1/dist/leaflet.css',
 	'https://unpkg.com/leaflet@1.3.1/dist/leaflet.js',
 	'./img/1.jpg',
