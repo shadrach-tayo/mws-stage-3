@@ -5,7 +5,21 @@ class MainHelper {
     this.fetchNeighborhoods();
     this.fetchCuisines();
     this.registerServiceWorker();
+    this.getFilterButtons();
     this.refreshing = false;
+
+  }
+
+  getFilterButtons() {
+    const neighborhoodSelect = document.querySelector('#neighborhoods-select');
+    const cuisineSelect = document.querySelector('#cuisines-select');
+
+    this.addListener('change', neighborhoodSelect, this.updateRestaurants.bind(this));
+    this.addListener('change', cuisineSelect, this.updateRestaurants.bind(this));
+  }
+
+  addListener(evt, target, callback) {
+    target.addEventListener(evt, callback);
   }
 
   /**
@@ -94,7 +108,7 @@ class MainHelper {
 
     const cuisine = cSelect[cIndex].value;
     const neighborhood = nSelect[nIndex].value;
-
+    
     this.db.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood)
       .then(restaurants => {
         this.resetRestaurants(restaurants);
