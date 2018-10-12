@@ -1,6 +1,6 @@
 class MainHelper {
   constructor() {
-    this.db = DBHelper;
+    this.db = RestaurantDb;
     this.initMap();
     this.fetchNeighborhoods();
     this.fetchCuisines();

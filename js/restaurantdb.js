@@ -1,8 +1,7 @@
 /**
  * Common database helper functions.
  */
-class DBHelper {
-
+class RestaurantDb {
   /*
   * Open database
   */
@@ -46,7 +45,7 @@ class DBHelper {
           console.log('found in database');
           resolve(restaurants);
         } else {
-            return fetch(`${DBHelper.DATABASE_URL}/restaurants`,
+            return fetch(`${RestaurantDb.DATABASE_URL}/restaurants`,
               {
                 method: 'GET'
               }
@@ -104,7 +103,7 @@ class DBHelper {
    * TODO: change to query data from database by id 
    */
   static fetchRestaurantById(id) {
-    return DBHelper.fetchRestaurantFromDbById(id)
+    return RestaurantDb.fetchRestaurantFromDbById(id)
     .then(restaurant => {
       if(restaurant !== undefined) {
         console.log('fetched from db by id')
@@ -126,7 +125,7 @@ class DBHelper {
   static fetchRestaurantByCuisine(cuisine) {
     console.log('fetch restaurant by cuisine called');
     // Fetch all restaurants  with proper error handling
-    DBHelper.fetchRestaurants()
+    RestaurantDb.fetchRestaurants()
     .then(restaurants => {
       // Filter restaurants to have only given cuisine type
       const results = restaurants.filter(r => r.cuisine_type == cuisine);
@@ -140,7 +139,7 @@ class DBHelper {
    */
   static fetchRestaurantByNeighborhood(neighborhood) {
     console.log('fetching restaurant by neighbourhood called');
-    return DBHelper.fetchRestaurants()
+    return RestaurantDb.fetchRestaurants()
     .then(restaurants => {
       // filter restaurants to have only given neighbourhood
       const results = restaurants.filter(r => r.neighborhood == neighborhood);
@@ -153,7 +152,7 @@ class DBHelper {
    */
   static fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood) {
     // Fetch all restaurants
-    return DBHelper.fetchRestaurants()
+    return RestaurantDb.fetchRestaurants()
     .then(restaurants => {
       let results = restaurants
       if (cuisine != 'all') { // filter by cuisine
@@ -172,7 +171,7 @@ class DBHelper {
    */
   static fetchNeighborhoods() {
     // Fetch all restaurants
-    return DBHelper.fetchRestaurants()
+    return RestaurantDb.fetchRestaurants()
     .then(restaurants => {
       // Get all neigbhourhoods from the restaurants
       const neighborhoods = restaurants.map((v, i) => restaurants[i].neighborhood);
@@ -187,7 +186,7 @@ class DBHelper {
    */
   static fetchCuisines() {
     // Fetch all restaurants
-    return DBHelper.fetchRestaurants()
+    return RestaurantDb.fetchRestaurants()
     .then(restaurants => {
        // Get all cuisines from all restaurants
        const cuisines = restaurants.map((v, i) => restaurants[i].cuisine_type)
@@ -220,7 +219,7 @@ class DBHelper {
     const marker = new L.marker([restaurant.latlng.lat, restaurant.latlng.lng],
       {title: restaurant.name,
       alt: restaurant.name,
-      url: DBHelper.urlForRestaurant(restaurant)
+      url: RestaurantDb.urlForRestaurant(restaurant)
       })
       marker.addTo(newMap);
     return marker;
@@ -228,4 +227,4 @@ class DBHelper {
 
 }
 
-DBHelper.dbPromise = DBHelper.openDatabase();
+RestaurantDb.dbPromise = RestaurantDb.openDatabase();

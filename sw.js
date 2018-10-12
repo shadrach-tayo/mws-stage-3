@@ -1,10 +1,10 @@
-const staticCacheName = 'v1';
+const staticCacheName = 'v2';
 
 const filesToCache = [
 	'/',
 	'./restaurant.html',
 	'./css/styles.css',
-	'./js/dbhelper.js',
+	'./js/restaurantdb.js',
 	'./js/main.js',
 	'./js/restaurant_info.js',
 	'https://rawgit.com/jakearchibald/idb/master/lib/idb.js',

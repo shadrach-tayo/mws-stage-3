@@ -28,7 +28,7 @@ initMap = () => {
       id: 'mapbox.streets'    
     }).addTo(newMap);
     fillBreadcrumb();
-    DBHelper.mapMarkerForRestaurant(self.restaurant, self.newMap);
+    RestaurantDb.mapMarkerForRestaurant(self.restaurant, self.newMap);
   })
   .catch(err => console.error(err, 'could not fetch restaurant from url'));
 }  
@@ -44,7 +44,7 @@ initMap = () => {
         scrollwheel: false
       });
       fillBreadcrumb();
-      DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
+      RestaurantDb.mapMarkerForRestaurant(self.restaurant, self.map);
     }
   });
 } */
@@ -63,7 +63,7 @@ fetchRestaurantFromURL = () => {
       error = 'No restaurant id in URL'
       reject(error);
     } else {
-      return DBHelper.fetchRestaurantById(id)
+      return RestaurantDb.fetchRestaurantById(id)
       .then(restaurant => {
         self.restaurant = restaurant;
         fillRestaurantHTML();
