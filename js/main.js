@@ -260,7 +260,8 @@ class MainHelper {
    * Method to update a modified restaurant in the local db;
    */
   updateRestaurant(restaurant) {
-    
+    this.db.updateRestaurant(restaurant)
+      .then(() => console.log('restaurant updated', restaurant));
   }
     
 } // class ends here

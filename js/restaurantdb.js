@@ -200,7 +200,16 @@ class RestaurantsDb {
       })
       marker.addTo(newMap);
     return marker;
-  } 
+  }
+
+  static updateRestaurant(restaurant) {
+    console.log(this.dbPromise);
+    return this.dbPromise.then(db => {
+      db.transaction('mws', 'readwrite')
+        .objectStore('mws')
+        .put(restaurant);
+    })
+  }
 
 }
 
