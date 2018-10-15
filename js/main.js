@@ -171,8 +171,8 @@ class MainHelper {
   resetRestaurants(restaurants) {
     // Remove all restaurants
     this.restaurants = [];
-    const ul = document.getElementById ('restaurants-list');
-    ul.innerHTML = '';
+    const div = document.getElementById ('restaurants-list');
+    div.innerHTML = '';
 
     // Remove all map markers
     if (this.markers) {
@@ -207,7 +207,13 @@ class MainHelper {
     image.sizes = `(max-width: 200px) 25vw, (min-width: 200px) 50vw', 100vw`;
     image.srcset = `img/${restaurant.photograph}.jpg 50w, img/${restaurant.photograph}.jpg 100w`;
     image.alt = restaurant.name;
-    div.append (image);
+    div.append(image);
+
+    // create favorite button for this particular restaurant
+    const favBtn = document.createElement('button');
+    favBtn.className = 'favorite-btn';
+    new FavoriteBtn(favBtn, restaurant);
+    div.append(favBtn);
 
     const details = document.createElement ('div');
     details.className = 'restaurant-details';
@@ -250,6 +256,12 @@ class MainHelper {
     window.location.reload ();
   };
 
+  /** 
+   * Method to update a modified restaurant in the local db;
+   */
+  updateRestaurant(restaurant) {
+    
+  }
     
 } // class ends here
 
