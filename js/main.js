@@ -1,6 +1,6 @@
 class MainHelper {
   constructor() {
-    this.db = RestaurantDb;
+    this.db = RestaurantsDb;
     this.initMap();
     this.fetchNeighborhoods();
     this.fetchCuisines();
@@ -108,7 +108,7 @@ class MainHelper {
 
     const cuisine = cSelect[cIndex].value;
     const neighborhood = nSelect[nIndex].value;
-    
+
     this.db.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood)
       .then(restaurants => {
         this.resetRestaurants(restaurants);
