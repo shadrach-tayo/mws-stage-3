@@ -2,7 +2,7 @@ class FavoriteBtn {
   constructor(el, restaurant) {
     this.restaurant = restaurant;
     this.el = el;
-    this.el.setAttribute('aria-role', 'switch');
+    this.el.setAttribute('role', 'switch')
     this.is_favorite = this.restaurant.is_favorite;
     this.render();
   }

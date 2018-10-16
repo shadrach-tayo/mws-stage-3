@@ -11,14 +11,35 @@ class RestaurantFetch {
     return `${this.DATABASE_URL}/restaurants/`;
   }
 
+  static RESTAURANT_URL(id) {
+    return `${this.DATABASE_URL}/restaurants/${id}`
+  }
+
+  static get REVIEWS_URL() {
+    return `${this.DATABASE_URL}/reviews/`;
+  }
+
+  static REVIEW_URL(id) {
+    return `${this.DATABASE_URL}/reviews/?restaurant_id=${id}`;
+  }
+
   static fetchRestaurants() {
     return fetch(this.RESTAURANTS_URL)
             .then(response => response.json())
   }
 
   static fetchRestaurant(id = 0) {
-    let restaurantUrl = `${this.RESTAURANTS_URL}${id}`;
-    return fetch(restaurantUrl)
+    return fetch(this.RESTAURANT_URL(id))
+      .then(response => response.json());
+  }
+
+  static fetchReviews() {
+    return fetch(this.REVIEWS_URL())
+      .then(response => response.json());
+  }
+
+  static fetchReview(id) {
+    return fetch(this.REVIEW_URL(id))
       .then(response => response.json());
   }
 }
