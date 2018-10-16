@@ -124,13 +124,14 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
 /**
  * Create all reviews HTML and add them to the webpage.
  */
-fillReviewsHTML = (reviews = self.restaurant.reviews) => {
+fillReviewsHTML = async (id = self.restaurant.id) => {
+  const reviews = await fetchReviews(id);
   const container = document.getElementById('reviews-container');
   const title = document.createElement('h2');
   title.innerHTML = 'Reviews';
   container.appendChild(title);
 
-  if (!reviews) {
+  if (reviews.length === 0) {
     const noReviews = document.createElement('p');
     noReviews.innerHTML = 'No reviews yet!';
     container.appendChild(noReviews);
@@ -141,6 +142,13 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
     ul.appendChild(createReviewHTML(review));
   });
   container.appendChild(ul);
+}
+
+/**
+ * Fetch Restaurant Review from Database
+ */
+fetchReviews = (id) => {
+  return RestaurantsDb.fetchReviews(id);
 }
 
 /**
@@ -156,7 +164,9 @@ createReviewHTML = (review) => {
   listHead.appendChild(name);
 
   const date = document.createElement('p');
-  date.innerHTML = review.date;
+  let d = new Date(review.updatedAt);
+  console.log(d);
+  date.innerHTML = d.toString().substr(0, 15);
   date.classList.add('reviews-list__date');
   listHead.appendChild(date);
   li.appendChild(listHead);

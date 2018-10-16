@@ -2,18 +2,44 @@
  * Common database helper functions.
  */
 class RestaurantsDb {
+  static get DBNAME() {
+    return 'restaurants-store';
+  }
+
+  static get RESTAURANTS_STORE() {
+    return 'restaurants';
+  }
+
+  static get REVIEWS_STORE() {
+    return 'reviews';
+  }
+
+  static get ID_INDEX() {
+    return 'id';
+  }
+
+  static get REVIEWS_INDEX() {
+    return 'restaurant_id';
+  }
+
   /*
-  * Open database
+  * Method to open Database
   */
   static openDatabase() {
     if(!navigator.serviceWorker) {
       console.warn('[service-worker] is not supported in this browser');
       return;
     }
-    return idb.open('mws-store', 1, (upgradeDb) => {
-      var store = upgradeDb.createObjectStore('mws', {keyPath: "id"});
-      console.log(upgradeDb);
-      store.createIndex('id', 'id');
+    return idb.open(this.DBNAME, 1, (upgradeDb) => {
+      if(!upgradeDb.objectStoreNames.contains(this.RESTAURANTS_STORE)) {
+        const store = upgradeDb.createObjectStore(this.RESTAURANTS_STORE, {keyPath: this.ID_INDEX});
+        store.createIndex(this.ID_INDEX, this.ID_INDEX);
+      }
+
+      if(!upgradeDb.objectStoreNames.contains(this.REVIEWS_STORE)) {
+        const objs = upgradeDb.createObjectStore(this.REVIEWS_STORE, {keyPath: this.ID_INDEX});
+        objs.createIndex(this.ID_INDEX, this.REVIEWS_INDEX);
+      }
     });
     
   }
@@ -23,12 +49,12 @@ class RestaurantsDb {
    */
   static fetchRestaurants() {
     // get the database instance and open a transaction in the
-    // 'mws' object store and return all;
+    // this.RESTAURANTS_STORE object store and return all;
     // first attempt to fetch from database
     // if not successfull, try fetch from the network
     return this.dbPromise.then(db => {
-      let tx = db.transaction('mws');
-      let store = tx.objectStore('mws');
+      let tx = db.transaction(this.RESTAURANTS_STORE);
+      let store = tx.objectStore(this.RESTAURANTS_STORE);
       return store.getAll();
     }).then(response => {
       if(response.length > 0) return response;
@@ -45,7 +71,7 @@ class RestaurantsDb {
   */
   static fetchRestaurant(id = 0) {
     return this.dbPromise.then(async db => {
-      const store = db.transaction('mws').objectStore('mws')
+      const store = db.transaction(this.RESTAURANTS_STORE).objectStore(this.RESTAURANTS_STORE)
       const idIndex = store.index('id');
       // +id --> coerce the value of id to type Number if it's a string
       return idIndex.get(+id);
@@ -58,8 +84,8 @@ class RestaurantsDb {
 
    static fetchRestaurantsFromDb() {
     return this.dbPromise.then(async db => {
-      let tx = db.transaction('mws');
-      let store = tx.objectStore('mws');
+      let tx = db.transaction(this.RESTAURANTS_STORE);
+      let store = tx.objectStore(this.RESTAURANTS_STORE);
       return store.getAll();
     })
    }
@@ -70,8 +96,8 @@ class RestaurantsDb {
     */
    static addRestaurantsToDb(restaurants) {
      this.dbPromise.then(async db => {
-       let tx = db.transaction('mws', 'readwrite');
-       let store = tx.objectStore('mws');
+       let tx = db.transaction(this.RESTAURANTS_STORE, 'readwrite');
+       let store = tx.objectStore(this.RESTAURANTS_STORE);
        await restaurants.forEach(res => store.put(res))
        return tx.complete;
      })
@@ -88,7 +114,6 @@ class RestaurantsDb {
         console.log('fetched from db by id')
         return restaurant;
       } else {
-        debugger;
         return RestaurantFetch.fetchRestaurant(id);
       }
     }).catch(err => console.log(err))
@@ -175,6 +200,44 @@ class RestaurantsDb {
   }
 
   /**
+   * Fetch review from database
+   * @param {string} id 
+   */
+  static fetchReviews(id) {
+    return this.dbPromise.then(db => {
+      return db.transaction(this.REVIEWS_STORE)
+        .objectStore(this.REVIEWS_STORE)
+        .index(this.ID_INDEX)
+        .getAll(+id)
+    }).then(reviews => {
+      console.log(reviews);
+      if(reviews === undefined || reviews.length === 0)
+        return this.fetchReviewFromNetwork(id);
+      return reviews
+    })
+  }
+
+  /**
+   * Fetch review from network
+   * @param {string} id s
+   */
+  static fetchReviewFromNetwork(id) {
+    return RestaurantFetch.fetchReviews(id)
+      .then(review => {
+        this.saveReview(review);
+        return review;
+      }).catch(err => console.log('fetch review failed: ', err));
+  }
+
+  static saveReview(reviews) {
+    this.dbPromise.then(db => {
+      let store = db.transaction(this.REVIEWS_STORE, 'readwrite')
+        .objectStore(this.REVIEWS_STORE)
+        reviews.forEach(review => store.put(review))
+    })
+  }
+
+  /**
    * Restaurant page URL.
    */
   static urlForRestaurant(restaurant) {
@@ -205,8 +268,8 @@ class RestaurantsDb {
   static updateRestaurant(restaurant) {
     console.log(this.dbPromise);
     return this.dbPromise.then(db => {
-      db.transaction('mws', 'readwrite')
-        .objectStore('mws')
+      db.transaction(this.RESTAURANTS_STORE, 'readwrite')
+        .objectStore(this.RESTAURANTS_STORE)
         .put(restaurant);
     })
   }

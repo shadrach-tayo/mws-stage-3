@@ -19,7 +19,7 @@ class RestaurantFetch {
     return `${this.DATABASE_URL}/reviews/`;
   }
 
-  static REVIEW_URL(id) {
+  static RESTAURANT_REVIEWS_URL(id) {
     return `${this.DATABASE_URL}/reviews/?restaurant_id=${id}`;
   }
 
@@ -33,8 +33,12 @@ class RestaurantFetch {
       .then(response => response.json());
   }
 
-  static fetchReviews() {
-    return fetch(this.REVIEWS_URL())
+  static fetchAllReviews() {
+    return fetch(this.REVIEWS_URL)
+  }
+
+  static fetchReviews(id) {
+    return fetch(this.RESTAURANT_REVIEWS_URL(id))
       .then(response => response.json());
   }
 
