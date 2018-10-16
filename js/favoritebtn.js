@@ -2,6 +2,7 @@ class FavoriteBtn {
   constructor(el, restaurant) {
     this.restaurant = restaurant;
     this.el = el;
+    this.el.setAttribute('aria-role', 'switch');
     this.is_favorite = this.restaurant.is_favorite;
     this.render();
   }
@@ -13,7 +14,7 @@ class FavoriteBtn {
       this.el.classList.remove('is-favorite');
     }
 
-    this.el.setAttribute('title', this.is_favorite ? `favorite ${this.restaurant.name}` : `unfavorite ${this.restaurant.name}`);
+    this.el.setAttribute('title', this.is_favorite ? `unfavorite ${this.restaurant.name}` : `favorite ${this.restaurant.name}`);
     this.el.setAttribute('aria-checked', this.is_favorite);
     this.el.setAttribute('aria-label', this.is_favorite ? `unfavorite ${this.restaurant.name}` : `favorite ${this.restaurant.name}`);
     this.setClick(this.el, this.updateFavorite.bind(this));
