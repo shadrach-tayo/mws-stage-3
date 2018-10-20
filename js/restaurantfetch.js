@@ -46,4 +46,15 @@ class RestaurantFetch {
     return fetch(this.REVIEW_URL(id))
       .then(response => response.json());
   }
+
+  static createReview(review) {
+    return fetch(this.REVIEWS_URL,
+      {
+        method: 'POST',
+        body: JSON.stringify(review),
+        headers: {
+          "Content-Type": "application/json; charset=utf-8"
+        }
+      })
+  }
 }

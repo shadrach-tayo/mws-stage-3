@@ -212,7 +212,7 @@ class RestaurantsDb {
     }).then(reviews => {
       console.log(reviews);
       if(reviews === undefined || reviews.length === 0)
-        return this.fetchReviewFromNetwork(id);
+        return this.fetchReviewsFromNetwork(id);
       return reviews
     })
   }
@@ -221,15 +221,15 @@ class RestaurantsDb {
    * Fetch review from network
    * @param {string} id s
    */
-  static fetchReviewFromNetwork(id) {
+  static fetchReviewsFromNetwork(id) {
     return RestaurantFetch.fetchReviews(id)
-      .then(review => {
-        this.saveReview(review);
-        return review;
+      .then(reviews => {
+        this.saveReviews(reviews);
+        return reviews;
       }).catch(err => console.log('fetch review failed: ', err));
   }
 
-  static saveReview(reviews) {
+  static saveReviews(reviews) {
     this.dbPromise.then(db => {
       let store = db.transaction(this.REVIEWS_STORE, 'readwrite')
         .objectStore(this.REVIEWS_STORE)
