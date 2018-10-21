@@ -177,7 +177,8 @@ class RestaurantInfo {
     listHead.appendChild(name);
   
     const date = document.createElement('p');
-    let d = new Date(review.updatedAt);
+    const updatedAt = review.updatedAt || new Date();
+    let d = new Date(updatedAt);
     console.log(d);
     date.innerHTML = d.toString().substr(0, 15);
     date.classList.add('reviews-list__date');

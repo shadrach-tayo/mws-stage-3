@@ -12,6 +12,10 @@ class ReviewsForm {
     this.setListeners();
   }
 
+  clear() {
+    [this.name, this.rating, this.comments].map(node => node.value = "");
+  }
+
   setListener(target, evt, callback) {
     target.addEventListener(evt, (e) => {
       e.preventDefault();
@@ -35,14 +39,19 @@ class ReviewsForm {
       }
       this.clear();
       RestaurantFetch.createReview(review)
-      .then(async review => {
+      .then(review => {
         this.context.addReview(review);
+      })
+      .catch(error => {
+        const offlineReview = {...review};
+        this.context.addReview(offlineReview);
+        this.saveReviewOffline(offlineReview);
       });
     }
   }
 
-  clear() {
-    [this.name, this.rating, this.comments].map(node => node.value = "");
+  saveReviewOffline(review) {
+    RestaurantsDb.savePendingReview(review)
   }
 
   validateForm() {

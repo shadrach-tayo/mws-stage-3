@@ -14,6 +14,10 @@ class RestaurantsDb {
     return 'reviews';
   }
 
+  static get PENDING_REVIEWS_STORE() {
+    return 'pending-reviews';
+  }
+
   static get ID_INDEX() {
     return 'id';
   }
@@ -40,6 +44,11 @@ class RestaurantsDb {
         const objs = upgradeDb.createObjectStore(this.REVIEWS_STORE, {keyPath: this.ID_INDEX});
         objs.createIndex(this.ID_INDEX, this.REVIEWS_INDEX);
       }
+
+      if(!upgradeDb.objectStoreNames.contains(this.PENDING_REVIEWS_STORE)) {
+        const objs = upgradeDb.createObjectStore(this.PENDING_REVIEWS_STORE, {autoIncrement: true});
+      }
+
     });
     
   }
@@ -219,7 +228,7 @@ class RestaurantsDb {
 
   /**
    * Fetch review from network
-   * @param {string} id s
+   * @param {string} id
    */
   static fetchReviewsFromNetwork(id) {
     return RestaurantFetch.fetchReviews(id)
@@ -244,6 +253,14 @@ class RestaurantsDb {
     this.dbPromise.then(db => {
       return db.transaction(this.REVIEWS_STORE, 'readwrite')
         .objectStore(this.REVIEWS_STORE)
+        .put(review);
+    })
+  }
+  
+  static savePendingReview(review) {
+    this.dbPromise.then(db => {
+      return db.transaction(this.PENDING_REVIEWS_STORE, 'readwrite')
+        .objectStore(this.PENDING_REVIEWS_STORE)
         .put(review);
     })
   }
