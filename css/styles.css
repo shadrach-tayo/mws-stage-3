@@ -642,6 +642,7 @@ select:focus {
   margin: 10px auto;
   padding: 20px;
   background: white;
+  opacity: .8;
   position: relative;
   font-size: 1rem;
   z-index: 3;
@@ -677,9 +678,16 @@ select:focus {
 
 .reviews-form input[type="text"]:focus,
 .reviews-form input[type="text"]:active,
+.reviews-form input[type="number"]:focus,
+.reviews-form input[type="number"]:active,
 textarea:focus,
 textarea:active {
-  border-bottom-color: #ccc;
+  border-bottom-color: rgb(6, 173, 6);
+}
+
+.reviews-form input[type="text"]:invalid,
+.reviews-form input[type="number"]:invalid {
+  border-bottom-color: rgb(167, 7, 34);
 }
 
 .reviews-form input[type="submit"] {

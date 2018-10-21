@@ -59,10 +59,11 @@
       <h3 class="reviews-form--title">Add Your Review</h3>
       <form id="reviews-form" class="reviews-form">
         <label for="reviews-name">
+          Username
           <input type="text" class="reviews-form--name" id="reviews-name" placeholder="Username" required>
         </label>
         <label for="reviews-rating">
-          rating
+          Rating
           <input type="number" class="reviews-form--rating" id="reviews-rating" min="1" max="5" step="1" placeholder="5" required>
         </label>
         <textarea name="comment box" class="reviews-form--comment" id="reviews-comment" cols="30" rows="10" aria-label="Type your comments here" placeholder="Comment here" required></textarea>
@@ -85,11 +86,10 @@
   <script type="text/javascript" src="js/restaurantfetch.js"></script>
   <!-- Database helpers -->
   <script type="text/javascript" src="js/restaurantdb.js"></script>
+  <!-- Reviews Form javascript file -->
+  <script src="js/reviewsform.js"></script>
   <!-- Main javascript file -->
   <script type="text/javascript" src="js/restaurant_info.js"></script>
-  <!-- Google Maps -->
- <!--  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_tKbW6A5pQ-eupxI56myUnHLqYCzOjKo&libraries=places&callback=initMap"></script> -->
-  <!-- End scripts -->
 
 </body>
 

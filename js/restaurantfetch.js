@@ -55,6 +55,6 @@ class RestaurantFetch {
         headers: {
           "Content-Type": "application/json; charset=utf-8"
         }
-      })
+      }).then(response => response.json())
   }
 }
