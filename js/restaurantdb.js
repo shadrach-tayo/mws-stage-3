@@ -238,6 +238,17 @@ class RestaurantsDb {
   }
 
   /**
+   * Method to save single review
+  */
+  static saveReview(review) {
+    this.dbPromise.then(db => {
+      return db.transaction(this.REVIEWS_STORE, 'readwrite')
+        .objectStore(this.REVIEWS_STORE)
+        .put(review);
+    })
+  }
+
+  /**
    * Restaurant page URL.
    */
   static urlForRestaurant(restaurant) {

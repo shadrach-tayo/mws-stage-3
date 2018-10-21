@@ -147,7 +147,7 @@ class RestaurantInfo {
   */
   addReview(review) {
     this.renderReview(review);
-    // RestaurantsDb.saveReviews(review);
+    RestaurantsDb.saveReview(review);
   }
 
   /**
