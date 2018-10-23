@@ -265,6 +265,19 @@ class RestaurantsDb {
     })
   }
 
+  static getPendingReviews(id) {
+    return this.dbPromise.then(db => {
+      return db.transaction(this.PENDING_REVIEWS_STORE)
+        .objectStore(this.PENDING_REVIEWS_STORE)  
+        .getAll()
+    }).then(pending => {
+      if(pending) {
+        pending = pending.filter(review => review.restaurant_id === +id);
+      }
+      return pending;
+    });
+  }
+
   /**
    * Restaurant page URL.
    */

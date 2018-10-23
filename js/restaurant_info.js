@@ -121,25 +121,35 @@ class RestaurantInfo {
   */
   fillReviewsHTML(id = this.restaurant.id) {
     const getReviews = this.fetchReviews(id);
-    getReviews.then(reviews => {
+    getReviews.then(async reviews => {
+      const pendingReviews = await this.getPendingReviews();
       const container = document.getElementById('reviews-container');
       const title = document.createElement('h2');
       title.innerHTML = 'Reviews';
       container.appendChild(title);
-    
+      
       if (reviews.length === 0) {
         const noReviews = document.createElement('p');
         noReviews.innerHTML = 'No reviews yet!';
         container.appendChild(noReviews);
         return;
       }
-      // const ul = document.getElementById('reviews-list');
+
+      // concat the reviews and pending review before rendering
+      reviews = reviews.concat(pendingReviews)
+      
       reviews.forEach(review => {
         this.reviewList.appendChild(this.createReviewHTML(review));
       });
       container.appendChild(this.reviewList);
     })
-      
+  }
+
+  /**
+   * Get Restaurant Pending reviews in the database if there is?
+  */
+  getPendingReviews() {
+    return RestaurantsDb.getPendingReviews(this.restaurant.id);
   }
 
   /**

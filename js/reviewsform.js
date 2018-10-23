@@ -3,6 +3,7 @@ class ReviewsForm {
     this.context = context;
     this.restaurant_id = restaurantId;
     this.form = form;
+    this.addReviewButton = document.querySelector('.add-review--button');
     this.name = document.querySelector('#reviews-name');
     this.rating = document.querySelector('#reviews-rating');
     this.comments = document.querySelector('#reviews-comment');
@@ -16,6 +17,12 @@ class ReviewsForm {
     [this.name, this.rating, this.comments].map(node => node.value = "");
   }
 
+  hideReviewForm() {
+    this.form.classList.add('hidden');
+    this.addReviewButton.classList.remove('hidden');
+    this.lastActive.focus();
+  }
+
   setListener(target, evt, callback) {
     target.addEventListener(evt, (e) => {
       e.preventDefault();
@@ -26,6 +33,15 @@ class ReviewsForm {
   setListeners() {
     this.setListener(this.form, 'submit', this.submitReview);
     this.setListener(this.submitBtn, 'submit', this.submitReview);
+    this.setListener(this.addReviewButton, 'click', this.showReviewForm);
+  }
+
+  showReviewForm() {
+    this.lastActive = document.activeElement;
+    console.log(this.lastActive);
+    this.form.classList.remove('hidden');
+    this.addReviewButton.classList.add('hidden');
+    this.form.querySelector('input').focus();
   }
 
   submitReview() {
@@ -37,7 +53,13 @@ class ReviewsForm {
         "rating": this.rating.value,
         "comments": this.comments.value
       }
+
+      // clear the form values 
       this.clear();
+
+      // hide the form in the next frame
+      this.hideReviewForm();
+
       RestaurantFetch.createReview(review)
       .then(review => {
         this.context.addReview(review);

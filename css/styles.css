@@ -641,22 +641,46 @@ select:focus {
   max-width: 600px;
   margin: 10px auto;
   padding: 20px;
-  background: white;
-  opacity: .8;
   position: relative;
   font-size: 1rem;
+  text-align: center;
   z-index: 3;
 }
 
 .reviews-form {
   display: grid;
   grid-template-columns: 1fr;
-  grid-gap: 20px;
+  padding: 20px;
+  background-color: rgb(255, 255, 255);
+  text-align: left;
 }
 
 .reviews-form * {
   box-sizing: border-box;
 }
+
+
+.add-review--button {
+  align-self: center;
+  color: white;
+  cursor: pointer;
+  background-color: #f23949;
+  border: solid 1px #f02146;
+  border-bottom-width: 3px;
+  box-shadow: 0 1px 10px 2px rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  font-size: 1.2rem;
+  outline: none;
+  padding: 10px 20px;
+  position: relative;
+  transition: all 0.1s ease-in;
+}
+
+.add-review--button:hover {
+  background-color: #f12939;
+  box-shadow: 0 1px 8px 1px rgba(0, 0, 0, 0.1);
+}
+
 .reviews-form input {
   display: inline-block;
   width: 100%;
@@ -668,26 +692,46 @@ select:focus {
   border-bottom-width: 5px;
   border-radius: 5px;
   border-radius: 5px;
+  margin-top: 10px;
   transition: all .3s ease;
   outline: none;
 }
 
-.reviews-form input:not(:last-child) {
-  margin-bottom: 20px;
+.reviews-form textarea {
+  margin-bottom: 10px;
+  margin-top: 20px;
 }
 
 .reviews-form input[type="text"]:focus,
 .reviews-form input[type="text"]:active,
 .reviews-form input[type="number"]:focus,
 .reviews-form input[type="number"]:active,
-textarea:focus,
-textarea:active {
+.reviews-form textarea:focus,
+.reviews-form textarea:active {
   border-bottom-color: rgb(6, 173, 6);
 }
 
-.reviews-form input[type="text"]:invalid,
-.reviews-form input[type="number"]:invalid {
+.reviews-form input[type="text"]:not(:placeholder-shown) input[type="text"]:invalid,
+.reviews-form input[type="number"]:not(:placeholder-shown) input[type="number"]:invalid {
   border-bottom-color: rgb(167, 7, 34);
+}
+
+label {
+  font-size: .8rem;
+}
+
+.reviews-form input + label {
+  padding-left: 10px;
+  will-change: transform;
+  will-change: opacity;
+  transform: translateY(-40px) scale(.9);
+  opacity: 0;
+  transition: all .2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.reviews-form input:not(:placeholder-shown) + label {
+  transform: translateY(-70px) scale(1);
+  opacity: 1;
 }
 
 .reviews-form input[type="submit"] {
@@ -697,7 +741,7 @@ textarea:active {
   background-color: #f23949;
   background-size: 20px 20px;
   background-image: linear-gradient(
-                              45deg, 
+    45deg, 
                               rgba(255, 255, 255, 0.15) 25%,
                               rgba(0, 0, 0, 0) 25%,
                               rgba(0, 0, 0, 0) 50%,
@@ -706,7 +750,7 @@ textarea:active {
                               rgba(0, 0, 0, 0) 75%,
                               rgba(0, 0, 0, 0)
                               ); 
-  border: solid 1px #f02146;
+                              border: solid 1px #f02146;
   border-bottom-width: 3px;
   color: white;
   font-size: 1.2rem;
@@ -720,10 +764,7 @@ textarea:active {
   background-size: 40px 40px;
 }
 
-.reviews-form--title {
-  font-size: 1.5rem;
-  padding-bottom: 20px;
-  margin: 0 0 20px;
-  border-bottom: dashed 1px #e6e6e6;
-  color: #000;
+/* ================== UTILITY CLASSES ====================== */
+.hidden {
+  display: none;
 }
