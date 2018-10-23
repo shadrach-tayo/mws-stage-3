@@ -1,18 +1,7 @@
-const staticCacheName = 'v4';
+const staticFileCache = 'v2';
+const staticImageCache = 'v1';
 
-const filesToCache = [
-	'/',
-	'./restaurant.html',
-	'./css/styles.css',
-	'./js/main.js',
-	'./js/favoritebtn.js',
-	'./js/restaurantdb.js',
-	'./js/restaurantfetch.js',
-	'./js/restaurant_info.js',
-	'./js/reviewsform.js',
-	'/js/idb.js',
-	'https://unpkg.com/leaflet@1.3.1/dist/leaflet.css',
-	'https://unpkg.com/leaflet@1.3.1/dist/leaflet.js',
+const imagesToCache = [
 	'./img/1.jpg',
 	'./img/2.jpg',
 	'./img/3.jpg',
@@ -39,9 +28,25 @@ const filesToCache = [
 	'./img/restaurant-icons_256x256.png',
 	'./img/restaurant-icons_512x512.png',
 	'./favicon.png'
+]
+
+const filesToCache = [
+	'/',
+	'./restaurant.html',
+	'./css/styles.css',
+	'./js/main.js',
+	'./js/favoritebtn.js',
+	'./js/restaurantdb.js',
+	'./js/restaurantfetch.js',
+	'./js/restaurant_info.js',
+	'./js/reviewsform.js',
+	'/js/idb.js',
+	'https://unpkg.com/leaflet@1.3.1/dist/leaflet.css',
+	'https://unpkg.com/leaflet@1.3.1/dist/leaflet.js'
 ];
 
 self.addEventListener('install', event => {
+	console.log('installing [service-worker]');
 	event.waitUntil(preCache());
 });
 
@@ -50,7 +55,7 @@ self.addEventListener('activate', event => {
 		caches.keys().then(cacheNames => {
 				return Promise.all(
 						cacheNames.filter(cacheName => {
-								return (cacheName != staticCacheName);
+								return (cacheName != staticFileCache);
 						}).map(cacheName => caches.delete(cacheName))
 				)
 		}).catch(err => console.log(err.stack()))
@@ -62,7 +67,6 @@ self.addEventListener('fetch', event => {
 	
 	if(requestUrl.origin === location.origin) {
 		if(requestUrl.pathname === '/restaurant.html') {
-			console.log('fetching', requestUrl.pathname);
 			event.respondWith(
 				caches.match('/restaurant.html')
 			);
@@ -78,7 +82,6 @@ self.addEventListener('fetch', event => {
 	}
 
 	if(requestUrl.href.includes('googlecode.com/svn/trunk/normalize.css')) {
-		console.log('fetching cloudfile');
 		event.respondWith(serveStaticCloudFile(event.request));
 		return;
 	}
@@ -91,19 +94,23 @@ self.addEventListener('fetch', event => {
 });
 
 function preCache() {
-	caches.open(staticCacheName).then(cache => {
+	caches.open(staticFileCache).then(cache => {
 		cache.addAll(filesToCache)
 			.catch(err => console.log(err, 'static assets failed to be cached'))
+	})
+	caches.open(staticImageCache).then(cache => {
+		cache.addAll(imagesToCache)
+			.then(() => console.log('static images successfully cached'))
+			.catch((e) => console.warn('static images could not be cached', e))
 	})
 }
 
 
 serveImages = (request) => {
 	let networkFetch = fetch(request);
-	return caches.open(staticCacheName).then(cache => {
+	return caches.open(imagesToCache).then(cache => {
 		return cache.match(request).then(response => {
 			return response || networkFetch.then(networkResponse => {
-				console.log(networkResponse.clone());
 				if(networkResponse)
 					cache.put(request, networkResponse.clone());
 					return networkResponse;	
