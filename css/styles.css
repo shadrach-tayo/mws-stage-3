@@ -290,6 +290,12 @@ select:focus {
   border-color: #fff;
 }
 
+@media screen and (min-width: 768px) {
+  .filter-select {
+    width: 50%;
+  }
+}
+
 @media screen and (max-width: 460px) {
   .filter-select {
       grid-template-columns: 200px;
