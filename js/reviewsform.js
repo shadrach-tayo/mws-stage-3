@@ -38,7 +38,6 @@ class ReviewsForm {
 
   showReviewForm() {
     this.lastActive = document.activeElement;
-    console.log(this.lastActive);
     this.form.classList.remove('hidden');
     this.addReviewButton.classList.add('hidden');
     this.form.querySelector('input').focus();
@@ -65,6 +64,7 @@ class ReviewsForm {
         this.context.addReview(review);
       })
       .catch(error => {
+        console.log(error);
         const offlineReview = {...review};
         this.context.addReview(offlineReview);
         this.saveReviewOffline(offlineReview);

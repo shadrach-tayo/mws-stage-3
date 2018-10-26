@@ -47,7 +47,6 @@ class RestaurantInfo {
   fetchRestaurantFromURL() {
     return new Promise((resolve, reject) => {
       if (this.restaurant) { // restaurant already fetched!
-        console.log('restaurant already fetched');
         resolve(this.restaurant);
         return;
       }
@@ -59,7 +58,6 @@ class RestaurantInfo {
         return RestaurantsDb.fetchRestaurantById(id)
         .then(restaurant => {
           this.restaurant = restaurant;
-          console.log('restaurant fetched from network');
           this.fillRestaurantHTML();
           resolve(restaurant);
         }).catch(err => reject(err));
@@ -138,10 +136,10 @@ class RestaurantInfo {
       // concat the reviews and pending review before rendering
       reviews = reviews.concat(pendingReviews)
       
+      container.appendChild(this.reviewList);
       reviews.forEach(review => {
         this.reviewList.appendChild(this.createReviewHTML(review));
       });
-      container.appendChild(this.reviewList);
     })
   }
 
@@ -189,7 +187,6 @@ class RestaurantInfo {
     const date = document.createElement('p');
     const updatedAt = review.updatedAt || new Date();
     let d = new Date(updatedAt);
-    console.log(d);
     date.innerHTML = d.toString().substr(0, 15);
     date.classList.add('reviews-list__date');
     listHead.appendChild(date);
@@ -239,4 +236,3 @@ class RestaurantInfo {
   // class ends here
 }
 const restaurantInfo = new RestaurantInfo();
-// self.restaurantInfo = new RestaurantInfo();

@@ -84,7 +84,7 @@ class MainHelper {
         else if (reg.active) serviceWorker = reg.active;
 
         if (serviceWorker) {
-          console.log ('[service-worker] has been registered', reg);
+          console.log ('[service-worker] has been registered');
         }
 
         // Add listener to track serviceWorker update event
@@ -136,7 +136,6 @@ class MainHelper {
     worker.postMessage({action: 'skipWaiting'});
     if (!this.refreshing) this.reloadPage();
     this.refreshing = true;
-    console.log ('worker updated');
   };
 
   /**
