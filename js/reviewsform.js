@@ -64,6 +64,7 @@ class ReviewsForm {
         this.context.addReview(review);
       })
       .catch(error => {
+        console.log(error);
         const offlineReview = {...review};
         this.context.addReview(offlineReview);
         this.saveReviewOffline(offlineReview);
