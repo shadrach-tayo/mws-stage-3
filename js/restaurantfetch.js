@@ -57,4 +57,14 @@ class RestaurantFetch {
         }
       }).then(response => response.json())
   }
+
+  static createReviews(reviews) {
+    debugger;
+    return Promise.all(
+      reviews.map(review => this.createReview(review))
+    ).then(responses => {
+      console.log(responses);
+      return responses;
+    })
+  }
 }

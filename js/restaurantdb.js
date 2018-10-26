@@ -238,6 +238,17 @@ class RestaurantsDb {
       }).catch(err => console.log('fetch review failed: ', err));
   }
 
+  /**
+   * Method to clear pending reviews objectstore in the database
+   */
+  static clearPendingReviews() {
+    this.dbPromise.then(db => {
+      return db.transaction(this.PENDING_REVIEWS_STORE, 'readwrite')
+        .objectStore(this.PENDING_REVIEWS_STORE)
+        .clear()
+    })
+  }
+
   static saveReviews(reviews) {
     this.dbPromise.then(db => {
       let store = db.transaction(this.REVIEWS_STORE, 'readwrite')
@@ -256,12 +267,46 @@ class RestaurantsDb {
         .put(review);
     })
   }
+
+  /**
+   * Saves an array of review objects to the reviews object store at once
+  */
+  static saveReviews(reviews) {
+    return Promise.all(
+      reviews.map(review => this.saveReview(review))
+    );
+  }
   
   static savePendingReview(review) {
     this.dbPromise.then(db => {
       return db.transaction(this.PENDING_REVIEWS_STORE, 'readwrite')
         .objectStore(this.PENDING_REVIEWS_STORE)
         .put(review);
+    })
+  }
+
+  static sendPendingReviews() {
+    let pendingReviews = [];
+    this.dbPromise.then(db => {
+      return db.transaction(this.PENDING_REVIEWS_STORE)
+      .objectStore(this.PENDING_REVIEWS_STORE)
+      .getAll()
+    })
+    .then(async reviews => {
+      debugger;
+      if(reviews.length > 0) {
+        console.log('pending reviews: ', reviews);
+        pendingReviews = pendingReviews.concat(reviews);
+        const netReviews = await RestaurantFetch.createReviews(pendingReviews);
+        debugger;
+        return netReviews;
+      }
+      return;
+    }).then(async reviews => {
+      if(reviews) {
+        await this.saveReviews(reviews);
+        await this.clearPendingReviews();
+      }
     })
   }
 
@@ -318,3 +363,10 @@ class RestaurantsDb {
 }
 
 RestaurantsDb.dbPromise = RestaurantsDb.openDatabase();
+navigator.connection.onchange = function networkChanged() {
+  console.log(navigator.onLine); 
+  if(navigator.onLine) {
+    console.log('about to send pending reviews');
+    RestaurantsDb.sendPendingReviews();
+  }
+}
