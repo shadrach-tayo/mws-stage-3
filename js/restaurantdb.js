@@ -120,7 +120,6 @@ class RestaurantsDb {
     return this.fetchRestaurant(id)
     .then(restaurant => {
       if(restaurant !== undefined) {
-        console.log('fetched from db by id')
         return restaurant;
       } else {
         return RestaurantFetch.fetchRestaurant(id);
@@ -133,7 +132,6 @@ class RestaurantsDb {
    * Fetch restaurants by a cuisine type with proper error handling.
    */
   static fetchRestaurantByCuisine(cuisine) {
-    console.log('fetch restaurant by cuisine called');
     // Fetch all restaurants  with proper error handling
     this.fetchRestaurants()
     .then(restaurants => {
@@ -148,13 +146,12 @@ class RestaurantsDb {
    * Fetch restaurants by a neighborhood with proper error handling.
    */
   static fetchRestaurantByNeighborhood(neighborhood) {
-    console.log('fetching restaurant by neighbourhood called');
     return this.fetchRestaurants()
     .then(restaurants => {
       // filter restaurants to have only given neighbourhood
       const results = restaurants.filter(r => r.neighborhood == neighborhood);
       return results;
-    }).catch(err => err);
+    }).catch(err => console.log(err));
   }
 
   /**
@@ -173,7 +170,7 @@ class RestaurantsDb {
       }
       return results;
     })
-    .catch(err => err);
+    .catch(err => console.log(err));
   }
 
   /**
@@ -204,7 +201,7 @@ class RestaurantsDb {
        const uniqueCuisines = cuisines.filter((v, i) => cuisines.indexOf(v) == i)
        return uniqueCuisines;
     })
-    .catch(err => err);
+    .catch(err => console.log(err));
   }
 
   /**
@@ -218,7 +215,6 @@ class RestaurantsDb {
         .index(this.ID_INDEX)
         .getAll(+id)
     }).then(reviews => {
-      console.log(reviews);
       if(reviews === undefined || reviews.length === 0)
         return this.fetchReviewsFromNetwork(id);
       return reviews
@@ -293,7 +289,6 @@ class RestaurantsDb {
     })
     .then(async reviews => {
       if(reviews.length > 0) {
-        console.log('pending reviews: ', reviews);
         pendingReviews = pendingReviews.concat(reviews);
         const netReviews = await RestaurantFetch.createReviews(pendingReviews);
 
@@ -363,7 +358,6 @@ RestaurantsDb.dbPromise = RestaurantsDb.openDatabase();
 navigator.connection.onchange = function networkChanged() {
   console.log(navigator.onLine); 
   if(navigator.onLine) {
-    console.log('about to send pending reviews');
     RestaurantsDb.sendPendingReviews();
   }
 }

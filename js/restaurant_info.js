@@ -47,7 +47,6 @@ class RestaurantInfo {
   fetchRestaurantFromURL() {
     return new Promise((resolve, reject) => {
       if (this.restaurant) { // restaurant already fetched!
-        console.log('restaurant already fetched');
         resolve(this.restaurant);
         return;
       }
@@ -59,7 +58,6 @@ class RestaurantInfo {
         return RestaurantsDb.fetchRestaurantById(id)
         .then(restaurant => {
           this.restaurant = restaurant;
-          console.log('restaurant fetched from network');
           this.fillRestaurantHTML();
           resolve(restaurant);
         }).catch(err => reject(err));

@@ -38,7 +38,6 @@ class ReviewsForm {
 
   showReviewForm() {
     this.lastActive = document.activeElement;
-    console.log(this.lastActive);
     this.form.classList.remove('hidden');
     this.addReviewButton.classList.add('hidden');
     this.form.querySelector('input').focus();
