@@ -31,6 +31,12 @@ body {
   }
 }
 
+@media screen and (min-width: 769px) {
+  body {
+    font-size: 18px;
+  }
+}
+
 ul, li {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10pt;
@@ -302,7 +308,7 @@ select:focus {
 #restaurants-list {
   width: 80%;
   margin: 0 auto 20px;
-  padding: 40px 0 5px;
+  padding: 20px 0 5px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
   grid-auto-rows: 400px;
@@ -415,6 +421,12 @@ select:focus {
 @media screen and (max-width: 650px) {
   #restaurants-list {
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+@media screen and (max-width: 400px) {
+  #restaurants-list {
+    padding: 0 0 5px;
   }
 }
 
