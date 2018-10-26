@@ -497,9 +497,6 @@ select:focus {
 	width: 100%;
 }
 
-#restaurant-hours {
-}
-
 #reviews-container {
   width: 80%;
   max-width: 700px;
@@ -522,10 +519,6 @@ select:focus {
     width: 80%;
   }
   
-  #restaurant-img, #restaurant-cuisine {
-    width: 80%;
-  }
-
   #restaruant-name {
     font-size: 1.2rem;
   }
@@ -551,13 +544,16 @@ select:focus {
   /* padding-bottom: 1pt; */
   text-align: center;
 }
+
+
+
 #reviews-list {
   margin: 0;
   padding: 0;
   width: 100%;
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: repeat(2, minmax(200px, 1fr));
+  grid-template-columns: minmax(200px, 1fr);
   justify-content: space-between;
   align-content: center;
   justify-items: center;
@@ -623,6 +619,12 @@ select:focus {
   color: #666;
 }
 
+@media screen and (min-width: 649px) {
+  #reviews-container h2 {
+    font-size: 2.5rem;
+  }
+}
+
 @media screen and (max-width: 648px) {
   #reviews-list {
     grid-template-columns: 1fr;
@@ -648,6 +650,7 @@ select:focus {
 }
 
 .reviews-form {
+  min-width: 289.422px;
   display: grid;
   grid-template-columns: 1fr;
   padding: 20px;
@@ -665,14 +668,17 @@ select:focus {
   color: white;
   cursor: pointer;
   background-color: #f23949;
-  border: solid 1px #f02146;
-  border-bottom-width: 3px;
+  border: none;
+  border-bottom: solid 2px #a80000;
   box-shadow: 0 1px 10px 2px rgba(0, 0, 0, 0.2);
   display: inline-block;
   font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 2px;
   outline: none;
   padding: 10px 20px;
   position: relative;
+  text-transform: uppercase;
   transition: all 0.1s ease-in;
 }
 
@@ -756,8 +762,9 @@ label {
   font-size: 1.2rem;
   outline: none;
   cursor: pointer;
-  z-index: 1;
+  text-transform: uppercase;
   transition: all 0.3s ease-in;
+  z-index: 1;
 }
 
 .reviews-form input[type="submit"]:hover {
