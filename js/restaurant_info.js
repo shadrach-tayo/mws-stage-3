@@ -136,10 +136,10 @@ class RestaurantInfo {
       // concat the reviews and pending review before rendering
       reviews = reviews.concat(pendingReviews)
       
-      container.appendChild(this.reviewList);
       reviews.forEach(review => {
         this.reviewList.appendChild(this.createReviewHTML(review));
       });
+      container.appendChild(this.reviewList);
     })
   }
 
