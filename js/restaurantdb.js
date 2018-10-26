@@ -139,7 +139,6 @@ class RestaurantsDb {
     .then(restaurants => {
       // Filter restaurants to have only given cuisine type
       const results = restaurants.filter(r => r.cuisine_type == cuisine);
-      debugger;
       callback(null, results);
     })
     .catch(err => err);
@@ -293,12 +292,11 @@ class RestaurantsDb {
       .getAll()
     })
     .then(async reviews => {
-      debugger;
       if(reviews.length > 0) {
         console.log('pending reviews: ', reviews);
         pendingReviews = pendingReviews.concat(reviews);
         const netReviews = await RestaurantFetch.createReviews(pendingReviews);
-        debugger;
+
         return netReviews;
       }
       return;
@@ -352,7 +350,6 @@ class RestaurantsDb {
   }
 
   static updateRestaurant(restaurant) {
-    console.log(this.dbPromise);
     return this.dbPromise.then(db => {
       db.transaction(this.RESTAURANTS_STORE, 'readwrite')
         .objectStore(this.RESTAURANTS_STORE)
