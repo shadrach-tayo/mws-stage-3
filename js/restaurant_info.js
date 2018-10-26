@@ -181,7 +181,7 @@ class RestaurantInfo {
     listHead.classList.add('reviews-list__heading');
     const name = document.createElement('p');
     name.classList.add('reviews-list__name');
-    name.innerHTML = review.name;
+    name.innerHTML = review.name[0].toUpperCase() + review.name.substr(1);
     listHead.appendChild(name);
   
     const date = document.createElement('p');
