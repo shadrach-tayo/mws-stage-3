@@ -68,7 +68,7 @@ self.addEventListener('fetch', event => {
 	if(requestUrl.origin === location.origin) {
 		if(requestUrl.pathname === '/restaurant.html') {
 			event.respondWith(
-				caches.match('/restaurant.html')
+				caches.match('./restaurant.html')
 			);
 			console.log(requestUrl.pathname);
 			return;
