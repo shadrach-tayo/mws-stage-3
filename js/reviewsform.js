@@ -8,6 +8,21 @@ class ReviewsForm {
     this.rating = document.querySelector('#reviews-rating');
     this.comments = document.querySelector('#reviews-comment');
     this.submitBtn = document.querySelector('#reviews-submit');
+    this.closeBtn = document.querySelector('#js-close-btn');
+
+    // form animation keys
+    this.formAnimationKeys = [
+      {display: 'none', transform: 'scale(.2)', opacity: '0'},
+      {display: 'grid', transform: 'scale(.5)', opacity: '.5'},
+      {display: 'grid', transform: 'scale(1)', opacity: '1', easing: 'cubic-bezier(.35,.97,.13,1.14)'}
+    ];
+
+    // create form animation and pause it
+    this.formAnimation = this.form.animate(
+      this.formAnimationKeys,
+      {duration: 300}
+    );
+    this.formAnimation.pause();
     
     // Add listener to form and submit button
     this.setListeners();
@@ -18,28 +33,36 @@ class ReviewsForm {
   }
 
   hideReviewForm() {
-    this.form.classList.add('hidden');
     this.addReviewButton.classList.remove('hidden');
+    this.formAnimation.playblackRate = -1;
+    this.formAnimation.play();
     this.lastActive.focus();
+    setTimeout(() => {
+      this.form.classList.add('hidden');
+    }, 150);
   }
 
   setListener(target, evt, callback) {
     target.addEventListener(evt, (e) => {
+      console.log(target);
       e.preventDefault();
       callback.call(this)
-    });
+    }, false);
   }
 
   setListeners() {
     this.setListener(this.form, 'submit', this.submitReview);
     this.setListener(this.submitBtn, 'submit', this.submitReview);
     this.setListener(this.addReviewButton, 'click', this.showReviewForm);
+    this.setListener(this.closeBtn, 'click', this.hideReviewForm);
   }
 
   showReviewForm() {
     this.lastActive = document.activeElement;
     this.form.classList.remove('hidden');
     this.addReviewButton.classList.add('hidden');
+    this.formAnimation.playblackRate = 1;
+    this.formAnimation.play();
     this.form.querySelector('input').focus();
   }
 

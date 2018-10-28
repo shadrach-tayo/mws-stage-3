@@ -674,6 +674,9 @@ select:focus {
   padding: 20px;
   background-color: rgb(255, 255, 255);
   text-align: left;
+  position: relative;
+  will-change: transform; 
+  will-change: opacity;
 }
 
 .reviews-form * {
@@ -704,6 +707,41 @@ select:focus {
   background-color: #f12939;
   box-shadow: 0 1px 8px 1px rgba(0, 0, 0, 0.1);
 }
+
+.close-btn {
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  border: none;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: -20px;
+  right: -20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.close-btn::before,
+.close-btn::after {
+  content: "";
+  display: inline-block;
+  width: 40px;
+  height: 2px;
+  background: white;
+  -webkit-transform-origin-x: center;
+  -webkit-transform-origin-y: center;
+  transform: scale(.5);
+  transform-origin: center;
+}
+
+.close-btn::before {
+  transform: rotate(45deg) translateY(5px) translateX(10px);
+}
+
+.close-btn::after {
+  transform: rotate(-45deg) translateY(-10px) translateX(10px);
+}
+
 
 .reviews-form input {
   display: inline-block;
