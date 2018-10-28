@@ -715,10 +715,16 @@ select:focus {
   position: absolute;
   width: 50px;
   height: 50px;
+  padding: 5px;
   top: -20px;
   right: -20px;
   text-align: center;
   cursor: pointer;
+  }
+
+.close-btn:hover,
+.close-btn:focus {
+  background-image: linear-gradient(to right, #f12939, #f23829);
 }
 
 .close-btn::before,
@@ -728,18 +734,17 @@ select:focus {
   width: 40px;
   height: 2px;
   background: white;
-  -webkit-transform-origin-x: center;
-  -webkit-transform-origin-y: center;
-  transform: scale(.5);
+  -webkit-transform-origin: center;
   transform-origin: center;
+  /* transform: scale(.5); */
 }
 
 .close-btn::before {
-  transform: rotate(45deg) translateY(5px) translateX(10px);
+  transform: rotate(45deg) translateY(3px) translateX(3px);
 }
 
 .close-btn::after {
-  transform: rotate(-45deg) translateY(-10px) translateX(10px);
+  transform: rotate(-45deg) translateY(-8px) translateX(8px);
 }
 
 
