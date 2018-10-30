@@ -669,8 +669,6 @@ select:focus {
 
 .reviews-form {
   min-width: 289.422px;
-  display: grid;
-  grid-template-columns: 1fr;
   padding: 20px;
   background-color: rgb(255, 255, 255);
   text-align: left;
@@ -759,14 +757,26 @@ select:focus {
   border-bottom-width: 5px;
   border-radius: 5px;
   border-radius: 5px;
-  margin-top: 10px;
+  margin-bottom: 10px;
   transition: all .3s ease;
   outline: none;
 }
 
 .reviews-form textarea {
+  border: 1px solid #e6e6e6;
+  border-bottom: 7px solid #e6e6e6;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 1rem;
   margin-bottom: 10px;
-  margin-top: 20px;
+  margin-top: 5px;
+  padding: 20px;
+  height: 50%;
+  max-height: 140px;
+  width: 100%;
+  max-width: 100%;
+  grid: auto;
+  outline: none;
 }
 
 .reviews-form input[type="text"]:focus,
@@ -778,27 +788,17 @@ select:focus {
   border-bottom-color: rgb(6, 173, 6);
 }
 
-.reviews-form input[type="text"]:not(:placeholder-shown) input[type="text"]:invalid,
-.reviews-form input[type="number"]:not(:placeholder-shown) input[type="number"]:invalid {
+.reviews-form input[type="number"]:not(:placeholder-shown):invalid {
   border-bottom-color: rgb(167, 7, 34);
 }
 
+.reviews-form input[type="text"]:placeholder-shown:invalid,
+.reviews-form input[type="number"]:placeholder-shown:invalid {
+  border-bottom-color: rgb(248, 174, 14);
+}
+
 label {
-  font-size: .8rem;
-}
-
-.reviews-form input + label {
-  padding-left: 10px;
-  will-change: transform;
-  will-change: opacity;
-  transform: translateY(-40px) scale(.9);
-  opacity: 0;
-  transition: all .2s cubic-bezier(0.075, 0.82, 0.165, 1);
-}
-
-.reviews-form input:not(:placeholder-shown) + label {
-  transform: translateY(-70px) scale(1);
-  opacity: 1;
+  font-size: 1rem;
 }
 
 .reviews-form input[type="submit"] {

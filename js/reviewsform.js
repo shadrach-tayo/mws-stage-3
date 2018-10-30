@@ -33,7 +33,7 @@ class ReviewsForm {
   }
 
   hideReviewForm() {
-    this.addReviewButton.classList.remove('hidden');
+    this.addReviewButton.classList.remove('hidden');  
     this.formAnimation.playblackRate = -1;
     this.formAnimation.play();
     this.lastActive.focus();
