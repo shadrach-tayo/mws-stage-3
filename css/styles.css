@@ -671,7 +671,7 @@ select:focus {
   top: 0;
   left: 0;
   z-index: 999;
-  transition: display .1s .3s ease-out;
+  transition: .3s;
 }
 
 .reviews-form--overlay {
