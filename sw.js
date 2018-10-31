@@ -1,5 +1,6 @@
-const staticFileCache = 'v2';
-const staticImageCache = 'v1';
+const staticFileCache = 'v1';
+const imageCache = 'v2';
+const staticCacheNames = [staticFileCache, imageCache];
 
 const imagesToCache = [
 	'./img/1.jpg',
@@ -55,10 +56,14 @@ self.addEventListener('activate', event => {
 		caches.keys().then(cacheNames => {
 				return Promise.all(
 						cacheNames.filter(cacheName => {
-								return (cacheName != staticFileCache);
-						}).map(cacheName => caches.delete(cacheName))
+								console.log(cacheNames);
+								return !staticCacheNames.includes(cacheName)
+						}).map(cacheName => {
+							console.log(cacheNames);
+							return caches.delete(cacheName);
+						})
 				)
-		}).catch(err => console.log(err.stack()))
+		}).catch(err => console.log(err.stack))
 	)
 });
 
@@ -80,11 +85,6 @@ self.addEventListener('fetch', event => {
 		event.respondWith(serveImages(event.request));
 		return;
 	}
-
-	if(requestUrl.href.includes('googlecode.com/svn/trunk/normalize.css')) {
-		event.respondWith(serveStaticCloudFile(event.request));
-		return;
-	}
 	
 	event.respondWith(
 		caches.match(event.request).then(response => {
@@ -97,11 +97,12 @@ function preCache() {
 	caches.open(staticFileCache).then(cache => {
 		cache.addAll(filesToCache)
 			.catch(err => console.log(err, 'static assets failed to be cached'))
-	})
-	caches.open(staticImageCache).then(cache => {
+	});
+
+	return caches.open(imageCache).then(cache => {
 		cache.addAll(imagesToCache)
-			.then(() => console.log('static images successfully cached'))
-			.catch((e) => console.warn('static images could not be cached', e))
+		.then(() => console.log('static images successfully cached'))
+		.catch((e) => console.warn('static images could not be cached', e))
 	})
 }
 
@@ -118,24 +119,6 @@ serveImages = (request) => {
 		});
 	});
 }
-
-/*
-function to serve cloud files from cache and
-fallback to network and serve then cache
-
-serveStaticCloudFile = (request) => {
-	let networkFetch = fetch(request);
-	return caches.open(serveStaticCloudFile).then(cache => {
-		return cache.match(request).then(response => {
-			return response || networkFetch.then(networkResponse => {
-				if(networkResponse)
-					cache.put(request, networkResponse.clone());
-					return networkResponse;
-			});
-		});
-	});
-}
-*/
 
 self.addEventListener('message', event => {
 	if(event.data.action == 'skipWaiting') {

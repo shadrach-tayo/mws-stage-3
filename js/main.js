@@ -125,7 +125,7 @@ class MainHelper {
   */
   trackInstalling(worker) {
     worker.addEventListener ('statechange', () => {
-      if ((worker.state = 'installed')) {
+      if ((worker.state === 'installed')) {
         // function to  update to newly installed worker
         this.updateWorker(worker);
       }
