@@ -97,6 +97,8 @@ class ReviewsForm {
     this.removeListener(this.submitBtn, 'click', this.submitReview);
     this.removeListener(this.closeBtn, 'click', this.hideReviewForm);
     this.removeListener(this.formOverlay, 'click', this.hideReviewForm);
+
+    this.form.removeEventListener('keydown', this.trapTabKey);
   }
   
   showReviewForm() {
