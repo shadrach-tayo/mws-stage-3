@@ -671,7 +671,7 @@ select:focus {
   top: 0;
   left: 0;
   z-index: 999;
-  transition: .3s;
+  transition: .3s cubic-bezier(.35,.97,.13,1.14);
 }
 
 .reviews-form--overlay {
