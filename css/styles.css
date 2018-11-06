@@ -336,7 +336,6 @@ select:focus {
   box-shadow: 0 1px 20px 2px rgba(0, 0, 0, 0.2);
   align-self: center;
   justify-self: center;
-  grid-template-rows: repeat(2, 50%);
   position: relative;
 }
 
