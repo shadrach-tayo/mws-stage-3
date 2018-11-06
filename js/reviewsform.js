@@ -4,6 +4,7 @@ class ReviewsForm {
     this.restaurant_id = restaurantId;
     this.formContainer = formContainer;
     this.form = formContainer.querySelector('#reviews-form');
+    this.formOverlay = formContainer.querySelector('.reviews-form--overlay');
     this.addReviewButton = document.querySelector('.add-review--button');
     this.name = document.querySelector('#reviews-name');
     this.rating = document.querySelector('#reviews-rating');
@@ -13,15 +14,14 @@ class ReviewsForm {
     
     // form animation keys
     this.formAnimationKeys = [
-      {display: 'none', transform: 'scale(1)', opacity: '0'},
-      {display: 'block', transform: 'scale(.5)', opacity: '0'},
-      {display: 'block', transform: 'scale(1)', opacity: '1', easing: 'cubic-bezier(.35,.97,.13,1.14)'}
+      {display: 'grid', transform: 'scale(.5)', opacity: '0'},
+      {display: 'grid', transform: 'scale(1)', opacity: '1', easing: 'cubic-bezier(.35,.97,.13,1.14)'}
     ];
     
     // create form animation and pause it
     this.formAnimation = this.form.animate(
       this.formAnimationKeys,
-      {duration: 300}
+      {duration: 200}
     );
     this.formAnimation.pause();
     this.setListener(this.addReviewButton, 'click', this.showReviewForm);
@@ -38,43 +38,80 @@ class ReviewsForm {
     this.formAnimation.playblackRate = -1;
     this.formAnimation.play();
     this.lastActive.focus();
-    setTimeout(() => {
-      this.formContainer.classList.add('hidden');
-    }, 150);
+    this.formContainer.classList.add('hidden');
     this.removeListeners();
   }
   
-  setListener(target, evt, callback) {
+  setListener(target, evt, callback, passEvt = false) {
     target.addEventListener(evt, (e) => {
-      e.preventDefault();
-      callback.call(this)
+      // check if passEvt is true, call callback with event as the first argument
+      if(passEvt) {
+        callback.call(this, e);
+      } else {
+        callback.call(this)
+        }
     }, false);
-  }
-
-  removeListener(target, evt, callback) {
-    target.removeEventListener(evt, callback);
   }
   
   setListeners() {
     this.setListener(this.form, 'submit', this.submitReview);
+    this.setListener(this.form, 'keydown', this.trapTabKey, true);
     this.setListener(this.submitBtn, 'submit', this.submitReview);
     this.setListener(this.closeBtn, 'click', this.hideReviewForm);
+    this.setListener(this.formOverlay, 'click', this.hideReviewForm);
+  }
+
+  trapTabKey(evt) {
+    const focusableElementsString = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
+    const focusableElements = [...this.form.querySelectorAll(focusableElementsString)];
+    const firstTabStop = focusableElements[0];
+    const lastTabStop = focusableElements[focusableElements.length - 1];
+    
+    // TAB
+    if(evt.keyCode === 9) {
+      
+      // SHIFT + TAB
+      if(evt.shiftKey) {
+        if(document.activeElement === firstTabStop) {
+          evt.preventDefault()
+          lastTabStop.focus();
+        }
+      } else {
+        if(document.activeElement === lastTabStop) {
+          evt.preventDefault()
+          firstTabStop.focus();
+        }
+      }
+      
+    }
+    if(evt.keyCode === 27) {
+      this.hideReviewForm();
+    }
+  }
+
+  
+  removeListener(target, evt, callback) {
+    target.removeEventListener(evt, callback);
   }
   
   removeListeners() {
     this.removeListener(this.form, 'submit', this.submitReview);
-    this.removeListener(this.submitBtn, 'submit', this.submitReview);
+    this.removeListener(this.form, 'keydown', this.trapTabKey);
+    this.removeListener(this.submitBtn, 'click', this.submitReview);
     this.removeListener(this.closeBtn, 'click', this.hideReviewForm);
+    this.removeListener(this.formOverlay, 'click', this.hideReviewForm);
+
+    this.form.removeEventListener('keydown', this.trapTabKey);
   }
   
   showReviewForm() {
-    this.setListeners();
     this.lastActive = document.activeElement;
     this.formContainer.classList.remove('hidden');
     this.addReviewButton.classList.add('hidden');
     this.formAnimation.playblackRate = 1;
     this.formAnimation.play();
     this.form.querySelector('input').focus();
+    this.setListeners();
   }
   
   submitReview() {

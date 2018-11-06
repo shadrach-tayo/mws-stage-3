@@ -658,12 +658,10 @@ select:focus {
 .reviews-form--container {
   display: grid;
   align-items: center;
-  /* justify-items: center; */
   justify-content: center;
   align-content: center;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
   margin: 0 auto;
   padding: 20px;
   font-size: 1rem;
@@ -672,6 +670,14 @@ select:focus {
   top: 0;
   left: 0;
   z-index: 999;
+  transition: .3s cubic-bezier(.35,.97,.13,1.14);
+}
+
+.reviews-form--overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
 }
 
 .reviews-form {
