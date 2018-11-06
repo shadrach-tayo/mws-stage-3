@@ -13,7 +13,7 @@ class RestaurantInfo {
       this.restaurant = restaurant;
 
       // calling method to create new reviews to access the restaurant id props
-      this.initReviewsForm(this, restaurant.id,  document.getElementById('reviews-form'))
+      this.initReviewsForm(this, restaurant.id,  document.querySelector('.reviews-form--container'))
 
       this.newMap = L.map('map', {
         center: [restaurant.latlng.lat, restaurant.latlng.lng],
@@ -37,8 +37,8 @@ class RestaurantInfo {
   /**
    * Initialize new reviews form for the restaurant
   */
-  initReviewsForm(restaurantInfo = this, restaurant_id, formNode) {
-    this.reviewsForm = new ReviewsForm(restaurantInfo, restaurant_id, formNode);
+  initReviewsForm(restaurantInfo = this, restaurant_id, formContainer) {
+    this.reviewsForm = new ReviewsForm(restaurantInfo, restaurant_id, formContainer);
   }
   
   /**

@@ -54,19 +54,22 @@
       <ul id="reviews-list"></ul>
     </section>
     <!-- End reviews -->
-    <!-- Beginning reviews form -->
-    <section class="reviews-form--container">
+    <div class="centered">
       <button class="add-review--button">Add Review</button>
-      <form id="reviews-form" class="reviews-form hidden">
-        <span class="close-btn" id="js-close-btn" aria-label="close review form"></span>
-        <input type="text" class="reviews-form--name" id="reviews-name" placeholder="Username" required>
+    </div>
+    <!-- Beginning reviews form -->
+    <div class="reviews-form--container hidden">
+      <div class="reviews-form--overlay"></div>
+      <form id="reviews-form" class="reviews-form">
+        <button class="close-btn" id="js-close-btn" aria-label="close review form"></button>
         <label for="reviews-name">Username</label>
-        <input type="number" class="reviews-form--rating" id="reviews-rating" min="1" max="5" step="1" placeholder="Rating" required>
+        <input type="text" class="reviews-form--name" id="reviews-name" autocomplete="off" placeholder="Username" required>
         <label for="reviews-rating">Rating</label>
-        <textarea name="comment box" class="reviews-form--comment" id="reviews-comment" cols="30" rows="10" aria-label="Type your comments here" placeholder="Comment here" required></textarea>
-        <input type="submit" value="Add Review" class="reviews-form--submit" id="reviews-submit">
+        <input type="number" class="reviews-form--rating" id="reviews-rating" min="1" max="5" step="1" placeholder="Rating" required>
+        <textarea name="comment box" class="reviews-form--comment" id="reviews-comment" aria-label="Type your comments here" placeholder="Comment here" required></textarea>
+        <input type="submit" value="Add Review" name="submit-btn" aria-label="Submit review"lass="reviews-form--submit" id="reviews-submit">
       </form>
-    </section>
+    </div>
     <!-- End reviews form-->
   </main>
   <!-- End main -->
