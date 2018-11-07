@@ -23,6 +23,11 @@ class RestaurantFetch {
     return `${this.DATABASE_URL}/reviews/?restaurant_id=${id}`;
   }
 
+  static FAVORITES_URL(id, value) {
+    return `http://localhost:1337/restaurants/${id}/?is_favorite=${value}`;
+
+  }
+
   static fetchRestaurants() {
     return fetch(this.RESTAURANTS_URL)
             .then(response => response.json())
@@ -64,5 +69,13 @@ class RestaurantFetch {
     ).then(responses => {
       return responses;
     })
+  }
+
+  static setFavourite(id, value) {
+    return fetch(this.FAVORITES_URL(id, value),
+      {
+        method: 'PUT'
+      }
+    ).then(res => console.log(res));
   }
 }
