@@ -10,6 +10,36 @@ class MainHelper {
 
   }
 
+  lazyLoadImages() {
+    const lazyImages = [...document.querySelectorAll('.lazy')];
+    console.log(lazyImages);
+    if('IntersectionObserver' in window) {
+      let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+        entries.forEach(entry => {
+          if(entry.isIntersecting) {
+            let lazyImage = entry.target;
+            lazyImage.src = lazyImage.dataset.src;
+            lazyImage.srcset = lazyImage.dataset.srcset;
+            lazyImage.classList.remove("lazy");
+            console.log(lazyImage, 'has been loaded');
+            lazyImageObserver.unobserve(lazyImage);
+          }
+        });
+      });
+
+      lazyImages.forEach(lazyImage => {
+        lazyImageObserver.observe(lazyImage);
+      });
+    } else {
+      lazyImages.forEach(lazyImage => {
+        lazyImage.src = lazyImage.dataset.src;
+        lazyImage.srcset = lazyImage.dataset.srcset;
+        lazyImage.classList.remove("lazy");
+        console.log(lazyImage, 'has been loaded');
+      })
+    }
+  }
+
   getFilterButtons() {
     const neighborhoodSelect = document.querySelector('#neighborhoods-select');
     const cuisineSelect = document.querySelector('#cuisines-select');
@@ -191,6 +221,7 @@ class MainHelper {
       ul.append(this.createRestaurantHTML(restaurant));
     });
     this.addMarkersToMap();
+    this.lazyLoadImages();
   };
 
   
@@ -200,23 +231,22 @@ class MainHelper {
   createRestaurantHTML(restaurant) {
     const div = document.createElement ('div');
     div.className = 'restaurant-card';
+    const imageContainer = document.createElement('div');
+    imageContainer.className = 'restaurant-image--container';
     const image = document.createElement ('img');
+    image.src = 'img/placeholder.jpg';
     image.className = 'restaurant-img';
-    image.src = `img/${restaurant.photograph}.jpg`;
+    image.classList.add('lazy');
+    image.setAttribute('data-src', `img/${restaurant.photograph}.jpg`);
+    image.setAttribute('data-srcset', `img/${restaurant.photograph}.jpg 50w, img/${restaurant.photograph}.jpg 100w`);
     image.sizes = `(max-width: 200px) 25vw, (min-width: 200px) 50vw', 100vw`;
-    image.srcset = `img/${restaurant.photograph}.jpg 50w, img/${restaurant.photograph}.jpg 100w`;
     image.alt = restaurant.name;
-    div.append(image);
-
-    // create favorite button for this particular restaurant
-    const favBtn = document.createElement('button');
-    favBtn.className = 'favorite-btn';
-    new FavoriteBtn(favBtn, restaurant);
-    div.append(favBtn);
+    imageContainer.appendChild(image);
+    div.appendChild(imageContainer);
 
     const details = document.createElement ('div');
     details.className = 'restaurant-details';
-    const name = document.createElement ('h1');
+    const name = document.createElement ('h2');
     name.innerHTML = restaurant.name;
     details.append (name);
 
@@ -233,6 +263,13 @@ class MainHelper {
     more.href = this.db.urlForRestaurant(restaurant)
     details.append (more);
     div.append (details);
+
+    // create favorite button for this particular restaurant
+    const favBtn = document.createElement('button');
+    favBtn.className = 'favorite-btn';
+    new FavoriteBtn(favBtn, restaurant);
+    div.append(favBtn);
+
     return div;
   };
 
