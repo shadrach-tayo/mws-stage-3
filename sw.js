@@ -1,4 +1,4 @@
-const staticFileCache = 'v1';
+const staticFileCache = 'v2';
 const staticCacheNames = [staticFileCache];
 
 const filesToCache = [

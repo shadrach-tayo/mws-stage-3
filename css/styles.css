@@ -69,7 +69,8 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 .home-page {
   display: grid;
   grid-template-columns: 100%;
-  grid-template-areas: "main"
+  grid-template-areas: "header"
+                        "main"
                        "footer";
   width: 100vw;
   height: 100vh;
@@ -77,12 +78,11 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 }
 
 .home-page > #maincontent {
-  grid-area: main;
+  grid-area: "main";
   align-self: start;
   max-height: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-areas: "map";
 } 
 
 .home-page > #maincontent {
@@ -114,13 +114,10 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
   padding: 16px;
   text-align: center;
   text-transform: uppercase;
-  left: 0;
-  bottom: 0;
-  right: 0;
 }
 
 .home-page > footer {
-  grid-area: footer;
+  grid-area: "footer";
   grid-row: -1;
   align-self: end;
 }
