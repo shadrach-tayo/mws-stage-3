@@ -67,24 +67,19 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 }
 
 .home-page {
-  display: grid;
-  grid-template-columns: 100%;
-  grid-template-areas: "main"
-                       "footer";
-  width: 100vw;
-  height: 100vh;
-  overflow-x: hidden;
-}
-
-.home-page > #maincontent {
-  grid-area: main;
-  align-self: start;
-  max-height: 100%;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-areas: "map";
-} 
-
+  display: block;
+   width: 100vw;
+   height: 100%;
+   overflow-x: hidden;
+ }
+ 
+ .home-page > #maincontent {
+   display: grid;
+   align-self: start;
+   max-height: 100%;
+   grid-template-columns: 1fr;
+ } 
+ 
 .home-page > #maincontent {
   justify-items: space-around;
 }
