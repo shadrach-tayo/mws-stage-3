@@ -3,7 +3,7 @@
 
 :root {
   --color-grey: rgba(0, 0, 0, 0.2);
-  --header-height: 50px;
+  --nav-height: 2.5rem;
   --theme-gradient: linear-gradient(to right, #7266df, #739);
 }
 
@@ -11,18 +11,21 @@
   box-sizing: border-box;
 }
 
-body,td,th,p{
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	color: #333;
-	line-height: 1.5;
+body,
+td,
+th,
+p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.5;
 }
 
 body {
   background-image: linear-gradient(85deg, #bad8ec, #bbaadd);
   position: relative;
   margin: 0;
-  padding-top: var(--header-height);
+  padding-top: var(--nav-height);
 }
 
 @media screen and (max-width: 768px) {
@@ -37,49 +40,71 @@ body {
   }
 }
 
-ul, li {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 10pt;
-	color: #333;
+ul,
+li {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+  color: #333;
 }
 
 a {
-	color: orange;
-	text-decoration: none;
+  color: orange;
+  text-decoration: none;
 }
 
-a:hover, a:focus {
-	color: #3397db;
-	text-decoration: none;
+a:hover,
+a:focus {
+  color: #3397db;
+  text-decoration: none;
 }
 
-a img{
-	border: none 0px #fff;
+a img {
+  border: none 0px #fff;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0 0 20px;
 }
 
-article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
-	display: block;
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
 }
 
 .home-page {
-  display: block;
-   width: 100vw;
-   height: 100%;
-   overflow-x: hidden;
- }
- 
- .home-page > #maincontent {
-   display: grid;
-   align-self: start;
-   max-height: 100%;
-   grid-template-columns: 1fr;
- } 
- 
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+/* .home-page > #maincontent {
+  grid-area: "main";
+  align-self: start;
+  grid-template-columns: 1fr;
+} */
+
 .home-page > #maincontent {
   justify-items: space-around;
 }
@@ -91,7 +116,6 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 
 .home-page > header {
   box-shadow: 0 0px 5px 5px rgba(0, 0, 0, 0.3);
-  height: var(--header-height);
   width: 100%;
   margin-bottom: 3px;
   position: fixed;
@@ -109,20 +133,16 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
   padding: 16px;
   text-align: center;
   text-transform: uppercase;
-  left: 0;
-  bottom: 0;
-  right: 0;
 }
 
 .home-page > footer {
-  grid-area: footer;
+  grid-area: "footer";
   grid-row: -1;
   align-self: end;
 }
 /* ====================== Navigation ====================== */
 nav {
   width: 100%;
-  height: 100%;
   background: var(--theme-gradient);
   display: grid;
   grid-template-columns: 1fr;
@@ -154,42 +174,42 @@ nav h1 a {
     text-align: center;
   }
   nav h1 a {
-    font-size: .8rem;
+    font-size: 0.8rem;
   }
 }
 
 #breadcrumb {
-    padding: 8px 20px 16px;
-    list-style: none;
-    background-color: #eee;
-    margin: 0;
-    text-align: center;
+  padding: 10px 20px 10px;
+  list-style: none;
+  background-color: #eee;
+  margin: 0;
+  text-align: center;
 }
 
 /* Display list items side by side */
 #breadcrumb li {
-    display: inline;
-    font-size: 1rem;
+  display: inline;
+  font-size: 1rem;
 }
 
 /* Add a slash symbol (/) before/behind each list item */
-#breadcrumb li+li:before {
-    padding: 8px;
-    color: black;
-    content: "/\00a0";
+#breadcrumb li + li:before {
+  padding: 8px;
+  color: black;
+  content: "/\00a0";
 }
 
 /* Add a color to all links inside the list */
 #breadcrumb li a {
-    color: #0275d8;
-    font-size: 1rem;
-    text-decoration: none;
+  color: #0275d8;
+  font-size: 1rem;
+  text-decoration: none;
 }
 
 /* Add a color on mouse-over */
 #breadcrumb li a:hover {
-    color: #01447e;
-    text-decoration: underline;
+  color: #01447e;
+  text-decoration: underline;
 }
 /* ====================== Map ====================== */
 #map {
@@ -238,14 +258,14 @@ select {
   color: #fff;
   width: 100%;
   max-width: 900px;
-  font-family: Arial,sans-serif;
+  font-family: Arial, sans-serif;
   font-size: 11pt;
   text-align: center;
   letter-spacing: 0;
   padding: 10px 10px 10px 40px;
   appearance: none;
   cursor: pointer;
-  transition: all .3s;
+  transition: all 0.3s;
   outline: none;
   -webkit-user-select: none;
   user-select: none;
@@ -254,7 +274,7 @@ select {
 select option {
   background-color: #739;
   cursor: pointer;
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 
 select option:hover,
@@ -263,21 +283,25 @@ select option:focus {
 }
 
 select.neighborhood {
-  background: -25px center / var(--background-pad) 100% no-repeat url(../img/neighbourhood.svg);
+  background: -25px center / var(--background-pad) 100% no-repeat
+    url(../img/neighbourhood.svg);
 }
 
 select.neighborhood:hover,
 select.neighborhood:focus {
-  background: 10px center / var(--background-pad) 100% no-repeat url(../img/neighbourhood.svg);
+  background: 10px center / var(--background-pad) 100% no-repeat
+    url(../img/neighbourhood.svg);
 }
 
 select.cuisine {
-  background: -25px center / var(--background-pad) 100% no-repeat url(../img/cuisine.svg);
+  background: -25px center / var(--background-pad) 100% no-repeat
+    url(../img/cuisine.svg);
 }
 
 select.cuisine:hover,
 select.cuisine:focus {
-  background: 10px center / var(--background-pad) 100% no-repeat url(../img/cuisine.svg);
+  background: 10px center / var(--background-pad) 100% no-repeat
+    url(../img/cuisine.svg);
 }
 
 select:hover,
@@ -293,45 +317,53 @@ select:focus {
 
 @media screen and (max-width: 460px) {
   .filter-select {
-      grid-template-columns: 200px;
-      grid-gap: 10px;
-      width: 100%;
+    grid-template-columns: 200px;
+    grid-gap: 10px;
+    width: 100%;
   }
 }
 
 @media screen and (max-width: 440px) {
-  #breadcrumb li, #breadcrumb li a {
+  #breadcrumb li,
+  #breadcrumb li a {
     font-size: 1rem;
   }
-} 
+}
 
 /* ====================== Restaurant Listing ====================== */
 #restaurants-list {
   width: 80%;
+  max-width: 900px;
   margin: 0 auto 20px;
   padding: 20px 0 5px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
-  grid-auto-rows: 400px;
+  grid-template-rows: 300px;
   grid-gap: 10px;
   align-items: center;
-  justify-items: center;
-  justify-content: space-around;
-  align-content: space-between;
-  justify-self: end;
+  justify-content: space-between;
 }
 
 .restaurant-card {
+  max-height: 350px;
   display: grid;
+  grid-template-columns: 1fr;
   background-color: #eeeeee;
-  font-family: Arial,sans-serif;
+  font-family: Arial, sans-serif;
   padding-bottom: 10px;
   border: none;
   border-radius: 5px;
   box-shadow: 0 1px 20px 2px rgba(0, 0, 0, 0.2);
-  align-self: center;
-  justify-self: center;
+  align-items: center;
+  justify-content: center;
   position: relative;
+}
+
+.restaurant-image--container {
+  width: 100%;
+  height: 100%;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
 }
 
 /* ===================== Favorite Button ========================= */
@@ -340,7 +372,7 @@ select:focus {
   border: none;
   border-radius: 50%;
   background-color: white;
-  background-image: url('../img/unfavorite.svg');
+  background-image: url("../img/unfavorite.svg");
   background-repeat: no-repeat;
   background-size: 30px 30px;
   background-position: center center;
@@ -348,12 +380,12 @@ select:focus {
   position: absolute;
   right: 10px;
   top: 10px;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
   z-index: 2;
 }
 
 .is-favorite {
-  background-image: url('../img/favorite.svg');
+  background-image: url("../img/favorite.svg");
 }
 
 /* ===================== */
@@ -371,14 +403,13 @@ select:focus {
   flex-direction: column;
   align-items: center;
   justify-items: center;
-  font-size: .8rem;
   padding: 5px;
 }
 
-.restaurant-details h1 {
+.restaurant-details h2 {
   color: #a80000;
-  font-family: Arial,sans-serif;
-  font-size: .8rem;
+  font-family: Arial, sans-serif;
+  font-size: 0.8rem;
   line-height: 1.3;
   text-transform: uppercase;
   -webkit-margin-block-start: 0;
@@ -386,17 +417,23 @@ select:focus {
   margin-block-end: 0;
 }
 
+.restaurant-details > p {
+  margin-block-end: 0;
+  /* margin-block-start: 0; */
+}
+
 .restaurant-details a {
-  padding: 10px 20px;
+  padding: 5px 16px;
   background-color: white;
   border: 1px solid #a80000;
   border-radius: 25px;
-  font-size: .6rem;
-  letter-spacing: 2px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  letter-spacing: 0.05rem;
   color: #a80000;
   cursor: pointer;
   text-transform: uppercase;
-  transition: all .2s ease-in;
+  transition: all 0.2s ease-in;
 }
 
 .restaurant-details a:hover,
@@ -407,26 +444,33 @@ select:focus {
 
 @media screen and (max-width: 968px) {
   #restaurants-list {
-      grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
-      grid-gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
+    grid-gap: 10px;
   }
 }
 
 @media screen and (max-width: 768px) {
   #restaurants-list {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
   }
 }
 
 @media screen and (max-width: 650px) {
   #restaurants-list {
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
+    justify-content: center;
   }
 }
 
 @media screen and (max-width: 400px) {
   #restaurants-list {
     padding: 0 0 5px;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  #restaurants-list {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -445,7 +489,7 @@ select:focus {
 }
 
 .inside header nav {
-  padding: 10px 0;
+  padding: 5px 0;
 }
 
 .inside #maincontent {
@@ -455,7 +499,7 @@ select:focus {
 
 .inside #map-container {
   background: rgb(39, 39, 194) none repeat scroll 0 0;
-  height: 250px;
+  height: 200px;
   width: 100%;
 }
 .inside #map {
@@ -479,7 +523,7 @@ select:focus {
 
 #restaurant-name {
   color: #7a0000;
-  font-family: Arial,sans-serif;
+  font-family: Arial, sans-serif;
   font-size: 2rem;
   font-weight: 200;
   letter-spacing: 0;
@@ -487,6 +531,13 @@ select:focus {
   text-transform: uppercase;
   line-height: 1.1;
   text-align: center;
+}
+
+.restaurant-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 #restaurant-address {
@@ -505,8 +556,9 @@ select:focus {
   text-transform: uppercase;
 }
 
-#restaurant-img, #restaurant-cuisine {
-	width: 100%;
+#restaurant-img,
+#restaurant-cuisine {
+  width: 100%;
 }
 
 #reviews-container {
@@ -530,23 +582,24 @@ select:focus {
   #restaurant-container {
     width: 80%;
   }
-  
+
   #restaruant-name {
     font-size: 1.2rem;
   }
 }
 
 @media screen and (max-width: 460px) {
-  #restaurant-container, #reviews-container {
+  #restaurant-container,
+  #reviews-container {
     width: 100%;
     padding: 0;
   }
 
-  #restaurant-img, #restaurant-cuisine {
+  #restaurant-img,
+  #restaurant-cuisine {
     width: 100%;
   }
 }
-
 
 #reviews-container h2 {
   color: #ae0404;
@@ -557,34 +610,31 @@ select:focus {
   text-align: center;
 }
 
-
-
 #reviews-list {
   margin: 0;
   padding: 0;
   width: 100%;
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: minmax(200px, 1fr);
-  justify-content: space-between;
+  grid-template-columns: 200px;
+  justify-content: center;
   align-content: center;
-  justify-items: center;
 }
 
 #reviews-list li {
+  justify-self: center;
+  display: block;
   width: 85%;
   min-width: 289.422px;
   background-color: #fff;
   border-top-left-radius: 1.5rem;
   border-bottom-right-radius: 1.5rem;
   box-shadow: 0 1px 20px 2px var(--color-grey);
-  display: block;
   list-style-type: none;
   margin: 0 0 30px;
   overflow: hidden;
   position: relative;
 }
-
 
 .reviews-list__heading {
   width: 100%;
@@ -608,7 +658,7 @@ select:focus {
 }
 
 .reviews-list__body {
-  padding:10px 20px 20px;
+  padding: 10px 20px 20px;
 }
 
 .reviews-list__rating {
@@ -638,14 +688,14 @@ select:focus {
 }
 
 @media screen and (max-width: 648px) {
-  #reviews-list {
+  /* #reviews-list {
     grid-template-columns: 1fr;
-  }
+  } */
 }
 
 @media screen and (max-width: 460px) {
   #reviews-list li {
-    width: 90%;
+    width: 80%;
   }
 }
 
@@ -665,7 +715,7 @@ select:focus {
   top: 0;
   left: 0;
   z-index: 999;
-  transition: .3s cubic-bezier(.35,.97,.13,1.14);
+  transition: 0.3s cubic-bezier(0.35, 0.97, 0.13, 1.14);
 }
 
 .reviews-form--overlay {
@@ -682,7 +732,7 @@ select:focus {
   margin: 0 auto;
   position: relative;
   background-color: rgb(255, 255, 255);
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   border: none;
   box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
   text-align: left;
@@ -691,7 +741,6 @@ select:focus {
 .reviews-form * {
   box-sizing: border-box;
 }
-
 
 .add-review--button {
   align-self: center;
@@ -728,7 +777,7 @@ select:focus {
   right: -20px;
   text-align: center;
   cursor: pointer;
-  }
+}
 
 .close-btn:hover,
 .close-btn:focus {
@@ -755,7 +804,6 @@ select:focus {
   transform: rotate(-45deg) translateY(-8px) translateX(8px);
 }
 
-
 .reviews-form input {
   display: inline-block;
   width: 100%;
@@ -768,7 +816,7 @@ select:focus {
   border-radius: 5px;
   border-radius: 5px;
   margin-bottom: 10px;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
   outline: none;
 }
 
@@ -818,16 +866,16 @@ label {
   background-color: #f23949;
   background-size: 20px 20px;
   background-image: linear-gradient(
-    45deg, 
-                              rgba(255, 255, 255, 0.15) 25%,
-                              rgba(0, 0, 0, 0) 25%,
-                              rgba(0, 0, 0, 0) 50%,
-                              rgba(255, 255, 255, 0.15) 50%,
-                              rgba(255, 255, 255, 0.15) 75%,
-                              rgba(0, 0, 0, 0) 75%,
-                              rgba(0, 0, 0, 0)
-                              ); 
-                              border: solid 1px #f02146;
+    45deg,
+    rgba(255, 255, 255, 0.15) 25%,
+    rgba(0, 0, 0, 0) 25%,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 75%,
+    rgba(0, 0, 0, 0) 75%,
+    rgba(0, 0, 0, 0)
+  );
+  border: solid 1px #f02146;
   border-bottom-width: 3px;
   color: white;
   font-size: 1.2rem;

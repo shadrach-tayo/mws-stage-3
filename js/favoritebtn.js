@@ -29,9 +29,10 @@ class FavoriteBtn {
   }
 
   updateFavorite() {
-    this.toggleFavorite(this.isFavorite);
+    this.toggleFavorite(this.isFavorite); 
     this.restaurant.is_favorite = this.isFavorite;
     this.render();
     mainhelper.updateRestaurant(this.restaurant);
+    RestaurantFetch.setFavourite(this.restaurant.id, this.isFavorite);
   }
 }
