@@ -6,6 +6,7 @@ const filesToCache = [
   "./restaurant.html",
   "./css/styles.css",
   "./js/main.js",
+  "./js/grapqh-client.js",
   "./js/favoritebtn.js",
   "./js/restaurantdb.js",
   "./js/restaurantfetch.js",

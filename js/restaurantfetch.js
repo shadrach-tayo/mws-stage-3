@@ -1,10 +1,11 @@
 /**
  * class handles Fetch logic for the Restaurant app
  */
+const port = 4000;
 class RestaurantFetch {
   static get DATABASE_URL() {
-    const port = 1337; // Change this to your server port ---http://localhost:${port}
-    return `http://localhost:${port}`;
+    const port = 4000; // Change this to your server port ---http://localhost:${port}
+    return `http://localhost:${port}/graphql`;
   }
 
   static get RESTAURANTS_URL() {
@@ -27,8 +28,32 @@ class RestaurantFetch {
     return `http://localhost:1337/restaurants/${id}/?is_favorite=${value}`;
   }
 
+  static get getAllRestaurantsQuery() {
+    return `
+    query {
+      getAllRestaurants {
+        id
+        name
+        address
+        cuisine_type
+        neighborhood
+        is_favorite
+        photograph
+        latlng {
+          lat
+          lng
+        }
+      }
+    }
+    `;
+  }
+
   static fetchRestaurants() {
-    return fetch(this.RESTAURANTS_URL).then(response => response.json());
+    const getAllRestaurants = this.client.request(this.getAllRestaurantsQuery);
+    return getAllRestaurants.then(res => {
+      console.log(res);
+      return res.data.getAllRestaurants;
+    });
   }
 
   static fetchRestaurant(id = 0) {
@@ -71,3 +96,5 @@ class RestaurantFetch {
     }).then(res => console.log(res));
   }
 }
+
+RestaurantFetch.client = new GraphQLClient(`http://localhost:${port}/graphql`);
