@@ -41,7 +41,7 @@ class FavoriteBtn {
   updateFavorite() {
     this.toggleFavorite(this.isFavorite);
     this.restaurant.is_favorite = this.isFavorite;
-    requestAnimationFrame(this.render);
+    requestAnimationFrame(this.render.bind(this));
     mainhelper.updateRestaurant(this.restaurant);
     RestaurantFetch.setFavourite(this.restaurant.id, this.isFavorite);
   }

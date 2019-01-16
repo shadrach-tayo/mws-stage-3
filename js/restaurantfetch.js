@@ -122,6 +122,18 @@ class RestaurantFetch {
     `;
   }
 
+  static get setFavouriteMutation() {
+    return `
+    mutation($id: Int!, $is_favorite: Boolean!) {
+      setFavorite(id: $id, is_favorite: $is_favorite) {
+        id
+        name
+        is_favorite
+      }
+    }
+    `;
+  }
+
   static getAllRestaurants() {
     const getAllRestaurants = this.client.request(this.getAllRestaurantsQuery);
     return getAllRestaurants.then(res => {
@@ -171,10 +183,15 @@ class RestaurantFetch {
     );
   }
 
-  static setFavourite(id, value) {
-    return fetch(this.FAVORITES_URL(id, value), {
-      method: "PUT"
-    }).then(res => console.log(res));
+  static setFavourite(id, is_favorite) {
+    const setFavorite = this.client.request(this.setFavouriteMutation, {
+      id,
+      is_favorite
+    });
+    return setFavorite.then(res => {
+      console.log(res);
+      return res.data.setFavorite;
+    });
   }
 }
 
