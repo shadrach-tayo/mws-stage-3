@@ -130,7 +130,7 @@ class RestaurantsDb {
         if (restaurant !== undefined) {
           return restaurant;
         } else {
-          return RestaurantFetch.getAllRestaurant(id);
+          return RestaurantFetch.getRestaurant(id);
         }
       })
       .catch(err => console.log(err));
@@ -247,7 +247,8 @@ class RestaurantsDb {
    * @param {string} id
    */
   static fetchReviewsFromNetwork(id) {
-    return RestaurantFetch.fetchReviews(id)
+    console.log(typeof id);
+    return RestaurantFetch.getReviews(id)
       .then(reviews => {
         this.saveReviews(reviews);
         return reviews;

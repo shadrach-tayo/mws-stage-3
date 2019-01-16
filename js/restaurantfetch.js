@@ -61,7 +61,7 @@ class RestaurantFetch {
 
   static get getRestaurantQuery() {
     return `
-    query($id: INT!) {
+    query($id: Int!) {
       getRestaurant(id: $id) {
         id
         name
@@ -90,6 +90,38 @@ class RestaurantFetch {
     `;
   }
 
+  static get getReviewsQuery() {
+    return `
+    query($restaurant_id: Int!) {
+      getReviews(restaurant_id: $restaurant_id){
+        id
+        name
+        rating
+        comments
+        createdAt
+        updatedAt
+        restaurant_id
+      }
+    }
+    `;
+  }
+
+  static get getAllReviewsQuery() {
+    return `
+    query {
+      getAllReviews {
+        id
+        name
+        rating
+        comments
+        createdAt
+        updatedAt
+        restaurant_id
+      }
+    }
+    `;
+  }
+
   static getAllRestaurants() {
     const getAllRestaurants = this.client.request(this.getAllRestaurantsQuery);
     return getAllRestaurants.then(res => {
@@ -98,7 +130,7 @@ class RestaurantFetch {
     });
   }
 
-  static getAllRestaurant(id = 0) {
+  static getRestaurant(id = 0) {
     const getRestaurant = this.client.request(this.getRestaurantQuery, { id });
     return getRestaurant.then(res => {
       console.log(res);
@@ -106,18 +138,21 @@ class RestaurantFetch {
     });
   }
 
-  static fetchAllReviews() {
-    return fetch(this.REVIEWS_URL);
+  static getAllReviews() {
+    const getAllReviews = this.client.request(this.getAllReviewsQuery);
+    return getAllReviews.then(res => {
+      console.log(res);
+      return res.data.getAllReviews;
+    });
   }
 
-  static fetchReviews(id) {
-    return fetch(this.RESTAURANT_REVIEWS_URL(id)).then(response =>
-      response.json()
-    );
-  }
-
-  static fetchReview(id) {
-    return fetch(this.REVIEW_URL(id)).then(response => response.json());
+  static getReviews(restaurant_id) {
+    const getReviews = this.client.request(this.getReviewsQuery, {
+      restaurant_id
+    });
+    return getReviews.then(res => {
+      return res.data.getReviews;
+    });
   }
 
   static createReview(review) {
