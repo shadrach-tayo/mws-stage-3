@@ -3,21 +3,25 @@ class GraphQLClient {
     this.url = baseURI;
     this.options = Object.assign({}, options, {
       method: "POST",
-      header: {
+      headers: {
         "content-type": "application/json"
       }
     });
   }
 
   request(query, variables = {}) {
-    const f = fetch("http://localhost:4000/graphql", {
-      method: "POST",
-      body: JSON.stringify({
-        query,
-        variables
-      }),
-      headers: { "content-type": "application/json" }
-    })
+    const { method, headers, ...rest } = this.options;
+    const objParam = Object.assign(
+      {},
+      {
+        method,
+        headers,
+        body: JSON.stringify({ query, variables }),
+        ...rest
+      }
+    );
+
+    const f = fetch("http://localhost:4000/graphql", objParam)
       .then(res => res.json())
       .then(res => {
         console.log(res);
@@ -29,20 +33,5 @@ class GraphQLClient {
       });
 
     return f;
-
-    // const response = fetch(
-    //   this.url,
-    //   Object.assign({}, this.options, {
-    //     body: JSON.stringify({ query, variables })
-    //   })
-    // )
-    //   .then(res => {
-    //     console.log(res);
-    //     return res.json();
-    //   })
-    //   .then(r => console.log(r))
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
   }
 }

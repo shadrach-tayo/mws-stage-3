@@ -1,4 +1,4 @@
-const staticFileCache = "v2";
+const staticFileCache = "v3";
 const staticCacheNames = [staticFileCache];
 
 const filesToCache = [
@@ -6,13 +6,13 @@ const filesToCache = [
   "./restaurant.html",
   "./css/styles.css",
   "./js/main.js",
-  "./js/grapqh-client.js",
+  "./js/graphql-client.js",
   "./js/favoritebtn.js",
   "./js/restaurantdb.js",
   "./js/restaurantfetch.js",
   "./js/restaurant_info.js",
   "./js/reviewsform.js",
-  "/js/idb.js",
+  "./js/idb.js",
   "./img/placeholder.jpg",
   "./img/neighbourhood.svg",
   "./img/cuisine.svg",

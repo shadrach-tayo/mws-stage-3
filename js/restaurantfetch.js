@@ -43,12 +43,54 @@ class RestaurantFetch {
           lat
           lng
         }
+        operating_hours {
+          Monday
+          Tuesday
+          Wednesday
+          Thursday
+          Friday
+          Saturday
+          Sunday
+        }
+        createdAt
+        updatedAt
       }
     }
     `;
   }
 
-  static fetchRestaurants() {
+  static get getRestaurantQuery() {
+    return `
+    query($id: INT!) {
+      getRestaurant(id: $id) {
+        id
+        name
+        address
+        cuisine_type
+        neighborhood
+        is_favorite
+        photograph
+        latlng {
+          lat
+          lng
+        }
+        operating_hours {
+          Monday
+          Tuesday
+          Wednesday
+          Thursday
+          Friday
+          Saturday
+          Sunday
+        }
+        createdAt
+        updatedAt
+      }
+    }
+    `;
+  }
+
+  static getAllRestaurants() {
     const getAllRestaurants = this.client.request(this.getAllRestaurantsQuery);
     return getAllRestaurants.then(res => {
       console.log(res);
@@ -56,8 +98,12 @@ class RestaurantFetch {
     });
   }
 
-  static fetchRestaurant(id = 0) {
-    return fetch(this.RESTAURANT_URL(id)).then(response => response.json());
+  static getAllRestaurant(id = 0) {
+    const getRestaurant = this.client.request(this.getRestaurantQuery, { id });
+    return getRestaurant.then(res => {
+      console.log(res);
+      return res.data.getRestaurant;
+    });
   }
 
   static fetchAllReviews() {

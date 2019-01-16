@@ -73,7 +73,7 @@ class RestaurantsDb {
       })
       .then(response => {
         if (response.length > 0) return response;
-        return RestaurantFetch.fetchRestaurants();
+        return RestaurantFetch.getAllRestaurants();
       })
       .then(response => {
         this.addRestaurantsToDb(response);
@@ -130,7 +130,7 @@ class RestaurantsDb {
         if (restaurant !== undefined) {
           return restaurant;
         } else {
-          return RestaurantFetch.fetchRestaurant(id);
+          return RestaurantFetch.getAllRestaurant(id);
         }
       })
       .catch(err => console.log(err));
