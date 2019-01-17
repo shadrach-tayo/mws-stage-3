@@ -125,11 +125,12 @@ class ReviewsForm {
   submitReview(e) {
     e.preventDefault();
     let isValid = this.validateForm();
+
     if (isValid) {
       const review = {
         restaurant_id: this.restaurant_id,
         name: this.name.value,
-        rating: this.rating.value,
+        rating: Number(this.rating.value),
         comments: this.comments.value
       };
 

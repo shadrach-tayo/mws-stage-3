@@ -24,7 +24,6 @@ class GraphQLClient {
     const f = fetch("http://localhost:4000/graphql", objParam)
       .then(res => res.json())
       .then(res => {
-        console.log(res);
         if (!res.error && res.data) {
           return res;
         } else {

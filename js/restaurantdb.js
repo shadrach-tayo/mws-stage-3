@@ -247,7 +247,6 @@ class RestaurantsDb {
    * @param {string} id
    */
   static fetchReviewsFromNetwork(id) {
-    console.log(typeof id);
     return RestaurantFetch.getReviews(id)
       .then(reviews => {
         this.saveReviews(reviews);
@@ -392,7 +391,6 @@ class RestaurantsDb {
 RestaurantsDb.dbPromise = RestaurantsDb.openDatabase();
 if (navigator.connection) {
   navigator.connection.onchange = function networkChanged() {
-    console.log(navigator.onLine);
     if (navigator.onLine) {
       RestaurantsDb.sendPendingReviews();
     }
