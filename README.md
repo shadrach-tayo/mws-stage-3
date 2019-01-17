@@ -2,13 +2,14 @@
 
 ---
 
-Restaurants reviews PWA final project for Udacity Mobile web specialist Nanodegree
+Restaurants reviews PWA final project for Udacity Mobile web specialist Nanodegree Using GraphQL (no dependencies)
 
 ## Motivation
 
 ---
 
-After learning how to use GraphQL in both backend and frontend use cases and building little projects following the [how to graphql](https://www.howtographql.com/) tutorial, I felt the implement what I have learnt both server-side and client-side for the knowledge to stick, then it all came together as I wanted full control of the latter restaurant reviews server implemented in Hapi js which i know nothing about to build my own server using Express and GraphQL.
+After learning how to use GraphQL in both backend and frontend use cases and building little projects following the [how to graphql](https://www.howtographql.com/) tutorial, I felt the implement what I have learnt both server-side and client-side for the knowledge to stick.
+so I rewrote the [server](https://github.com/shadrach-tayo/restaurant-reviews-graphql-server) for scratch using GraphQL then i needed to re-implement the client to be compatible with the new server. So i wrote my own tiny vanilla-js GraphQL client library which is just a wrapper around fetch the used it in the [RestaurantFetch](https://github.com/shadrach-tayo/mws-stage-3/blob/graphql/js/restaurantfetch.js) Class responsible for fetching remote resources in the PWA.
 
 ## Tech / Frameworks used
 
@@ -23,5 +24,4 @@ After learning how to use GraphQL in both backend and frontend use cases and bui
 To get this server running locally in your terminal:
 
 - `git clone https://github.com/shadrach-tayo/restaurant-reviews-graphql-server.git` to clone the repo.
-- `npm i` to get the dependencies.
-- `npm run dev` to run the dev server
+- `npm start` to start client server
