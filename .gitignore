@@ -1,8 +1,5 @@
 #dependencies
 /node_modules
-/responsive_images
-/build
-/server
-/stage3-server
+/dist
 /.vscode
 /debug.log
