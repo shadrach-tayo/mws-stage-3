@@ -1,3 +1,9 @@
+import FavoriteBtn from "./favoritebtn";
+import RestaurantsDb from "./restaurantdb";
+
+/**
+ * MainHelper is the central controller of the index page
+ */
 class MainHelper {
   constructor() {
     this.db = RestaurantsDb;
@@ -117,7 +123,7 @@ class MainHelper {
    */
   registerServiceWorker() {
     if (navigator.serviceWorker) {
-      navigator.serviceWorker.register("sw.js", { scope: "/" }).then(reg => {
+      navigator.serviceWorker.register("/sw.js", { scope: "/" }).then(reg => {
         let serviceWorker;
 
         // check worker status

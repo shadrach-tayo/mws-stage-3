@@ -4,11 +4,12 @@
   "description": "a mobile web restaurants review app",
   "main": "/js/main.js",
   "scripts": {
-    "start": "live-server --open=dist",
+    "start": "nodemon server.js",
     "build": "rm -rf dist && npm run copy-assets",
     "copy-assets": "npm run static && npm run javascript",
     "static": "cp -r src/static dist && cp -r src/public/* dist",
-    "javascript": "npx rollup -c"
+    "javascript": "npx rollup -c && npm run idb",
+    "idb": "cp -r src/js/idb.js dist/js"
   },
   "repository": {
     "type": "git",
@@ -24,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/shadrach1999/mws-restaurant-stage-1/issues"
   },
-  "homepage": "https://github.com/shadrach1999/mws-restaurant-stage-1#readme"
+  "homepage": "https://github.com/shadrach1999/mws-restaurant-stage-1#readme",
+  "devDependencies": {
+    "express": "^4.16.4"
+  }
 }

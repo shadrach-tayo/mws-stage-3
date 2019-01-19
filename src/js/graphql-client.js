@@ -1,4 +1,4 @@
-class GraphQLClient {
+export default class GraphQLClient {
   constructor(baseURI, options = {}) {
     this.url = baseURI;
     this.options = Object.assign({}, options, {

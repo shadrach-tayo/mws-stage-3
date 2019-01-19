@@ -1,7 +1,9 @@
+import GraphQLClient from "./graphql-client";
+
 /**
  * class handles Fetching remote resources for the Restaurant app
  */
-class RestaurantFetch {
+export default class RestaurantFetch {
   static get getAllRestaurantsQuery() {
     return `
     query {
@@ -179,4 +181,4 @@ class RestaurantFetch {
 }
 
 const port = 4000;
-RestaurantFetch.client = new GraphQLClient(`http://localhost:${port}/graphql`);
+RestaurantFetch.client = new GraphQLClient(`http://localhost:{{PORT}}/graphql`);

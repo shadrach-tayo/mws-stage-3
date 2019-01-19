@@ -1,3 +1,8 @@
+import ReviewsForm from "./reviewsform";
+import RestaurantsDb from "./restaurantdb";
+/**
+ * RestaurantInfo -> controller for the restaurant page
+ */
 class RestaurantInfo {
   constructor() {
     this.initMap();

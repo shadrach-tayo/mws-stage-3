@@ -1,7 +1,9 @@
+import RestaurantFetch from "./restaurantfetch";
+
 /**
  * Common database helper functions.
  */
-class RestaurantsDb {
+export default class RestaurantsDb {
   static get DBNAME() {
     return "restaurants-store";
   }

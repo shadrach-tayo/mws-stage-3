@@ -1,4 +1,7 @@
-class ReviewsForm {
+import RestaurantFetch from "./restaurantfetch";
+import RestaurantsDb from "./restaurantdb";
+
+export default class ReviewsForm {
   constructor(context, restaurantId, formContainer) {
     this.context = context;
     this.restaurant_id = restaurantId;

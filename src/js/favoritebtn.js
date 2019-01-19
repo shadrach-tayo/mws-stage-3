@@ -1,4 +1,6 @@
-class FavoriteBtn {
+import RestaurantFetch from "./restaurantfetch";
+
+export default class FavoriteBtn {
   constructor(el, restaurant) {
     this.restaurant = restaurant;
     this.el = el;
