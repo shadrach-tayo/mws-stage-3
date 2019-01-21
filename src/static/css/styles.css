@@ -899,3 +899,44 @@ label {
   text-align: center;
   padding: 20px;
 }
+
+#notifier-dom {
+  padding: 0;
+  margin: 0;
+  min-width: 320px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 0.5rem;
+  z-index: 19999;
+}
+
+.notification {
+  margin: 0;
+  padding: 0.8rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background: #222222;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.notification > button {
+  background-color: transparent;
+  color: #739;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.error > button {
+  color: #970404;
+}
+
+.success > button {
+  color: #014d01;
+}

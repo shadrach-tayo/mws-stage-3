@@ -1,4 +1,5 @@
 import RestaurantFetch from "./restaurantfetch";
+import Notifier from "./notifier";
 
 /**
  * Common database helper functions.
@@ -393,8 +394,12 @@ export default class RestaurantsDb {
 RestaurantsDb.dbPromise = RestaurantsDb.openDatabase();
 if (navigator.connection) {
   navigator.connection.onchange = function networkChanged() {
+    console.log(navigator.connection, navigator.onLine);
     if (navigator.onLine) {
       RestaurantsDb.sendPendingReviews();
+      Notifier.show("Seems you're back online", { classname: "success" }, 3000);
+    } else {
+      Notifier.show("Seems you're offline", { classname: "error" }, 3000);
     }
   };
 }
