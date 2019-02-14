@@ -4,6 +4,7 @@
   "theme_color": "#A80000",
   "background_color": "#A80000",
   "display": "standalone",
+  "orientation": "any",
   "start_url": "/",
   "description": "A simple web app for restaurant reviews",
   "icons": [
