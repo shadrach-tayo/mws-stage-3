@@ -10,7 +10,7 @@ export default [
     plugins: [
       replace({
         deliminters: ["{{", "}}"],
-        API_URL: "http://localhost:4000/graphql"
+        API_URL: "http://localhost:3010/graphql"
       })
     ]
   },
